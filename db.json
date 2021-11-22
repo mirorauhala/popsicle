@@ -1,0 +1,18 @@
+{
+    "lists": [
+        {"id": 1, "name": "Backlog", "order": 1},
+        {"id": 2, "name": "Ongoing", "order": 2},
+        {"id": 3, "name": "Repro", "order": 3},
+        {"id": 4, "name": "Done", "order": 4}
+    ],
+    "tasks": [
+        {"id": 1, "body": "Create react ", "boardId": 1, "order": 1},
+        {"id": 2, "body": "read context api docs", "boardId": 1, "order": 2},
+        {"id": 3, "body": "read drag and drop docs", "boardId": 1, "order": 3},
+        {"id": 4, "body": "stuff", "boardId": 1, "order": 4},
+        {"id": 5, "body": "create vue ", "boardId": 2, "order": 5},
+        {"id": 6, "body": "read news", "boardId": 3, "order": 6},
+        {"id": 7, "body": "use colors", "boardId": 4, "order": 7},
+        {"id": 8, "body": "create things", "boardId": 2, "order": 8 }
+    ]
+}
