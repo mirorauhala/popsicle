@@ -1,13 +1,18 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from "react";
 
 export default function useFetchLists() {
-    const [lists, setLists] = useState([]);
+  const [lists, setLists] = useState([]);
 
-    useEffect(() => {
-        fetch('http://localhost:3010/lists')
-            .then(res => res.json())
-            .then(data => setLists(data));
-    }, []);
+  useEffect(() => {
+    const loadLists = async () => {
+      const response = await fetch("http://localhost:3010/lists");
+      const responseJson = await response.json();
 
-    return [lists, setLists];
+      setLists(responseJson);
+    };
+
+    loadLists();
+  }, []);
+
+  return [lists, setLists];
 }
