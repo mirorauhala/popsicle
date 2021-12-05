@@ -6,15 +6,18 @@ import Settings from './pages/Settings';
 
 function App() {
   return (
-    <div>
+    <>
       <Navbar />
 
-      <Routes>
-        <Route path="/" element={<Home />}/>
-        <Route path="/about" element={<About />}/>
-        <Route path="/settings" element={<Settings />}/>
-      </Routes>
-    </div>
+      <div id="routes" className="p-4">
+        <Routes>
+          <Route path="/" element={<Home />}/>
+          <Route path="/about" element={<About />}/>
+          <Route path="/settings" element={<Settings />}/>
+        </Routes>
+      </div>
+      
+    </>
   );
 }
 

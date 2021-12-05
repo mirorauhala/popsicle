@@ -19,7 +19,7 @@ export default function Board() {
   };
 
   return (
-    <div className="flex gap-3 p-4">
+    <div className="flex gap-3">
       <TaskContext.Provider value={tasks}>
         {lists.length > 0 &&
           lists.map((list) => <TaskList key={list.id} list={list} />)}

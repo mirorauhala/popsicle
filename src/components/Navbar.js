@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <nav className="border-b p-4 flex">
+    <nav className="border-b px-4 flex items-center h-16">
       <span className="font-bold pr-4">App</span>
 
       <ul className="flex">
