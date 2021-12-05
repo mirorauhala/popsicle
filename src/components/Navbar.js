@@ -27,6 +27,19 @@ export default function Navbar() {
           </NavLink>
         </li>
       </ul>
+
+      <ul className="flex ml-auto">
+        <li>
+          <NavLink
+            className={({ isActive }) => {
+              return isActive ? "font-bold px-2" : " px-2";
+            }}
+            to="/settings"
+          >
+            Asetukset
+          </NavLink>
+        </li>
+      </ul>
     </nav>
   );
 }
