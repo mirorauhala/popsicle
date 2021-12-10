@@ -1,4 +1,4 @@
-import { ReactComponent as Plus } from "../icons/plus.svg";
+import { Plus } from "../icons/plus";
 
 export default function NewTask(props) {
   return (
