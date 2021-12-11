@@ -1,18 +1,18 @@
 {
   "lists": [
-    { "id": 1, "name": "Backlog", "order": 1 },
-    { "id": 2, "name": "Ongoing", "order": 2 },
-    { "id": 3, "name": "Repro", "order": 3 },
-    { "id": 4, "name": "Done", "order": 4 }
+    { "id": 1, "name": "Backlog" },
+    { "id": 2, "name": "Ongoing" },
+    { "id": 3, "name": "Repro" },
+    { "id": 4, "name": "Done" }
   ],
   "tasks": [
-    { "id": 1, "body": "Create react ", "boardId": 1, "order": 1 },
-    { "id": 2, "body": "read context api docs", "boardId": 1, "order": 2 },
-    { "id": 3, "body": "read drag and drop docs", "boardId": 1, "order": 3 },
-    { "id": 4, "body": "stuff", "boardId": 1, "order": 4 },
-    { "id": 5, "body": "create vue ", "boardId": 2, "order": 5 },
-    { "id": 6, "body": "read news", "boardId": 3, "order": 6 },
-    { "id": 7, "body": "use colors", "boardId": 4, "order": 7 },
-    { "id": 8, "body": "create things", "boardId": 2, "order": 8 }
+    { "id": 1, "body": "Create react ", "listId": 1, "nextId": 2 },
+    { "id": 2, "body": "read context api docs", "listId": 1, "nextId": 3 },
+    { "id": 3, "body": "read drag and drop docs", "listId": 1, "nextId": 4 },
+    { "id": 4, "body": "stuff", "listId": 1, "nextId": 5 },
+    { "id": 5, "body": "create vue ", "listId": 2, "nextId": 6 },
+    { "id": 6, "body": "read news", "listId": 3, "nextId": 7 },
+    { "id": 7, "body": "use colors", "listId": 4, "nextId": 8 },
+    { "id": 8, "body": "create things", "listId": 2, "nextId": "EMPTY" }
   ]
 }
