@@ -18,7 +18,7 @@ export default function Settings() {
   };
 
   return (
-    <div className="bg-gray-100 p-10 rounded-2xl h-full">
+    <div className="bg-white p-10 rounded-2xl w-full h-full">
       <h1 className="font-bold text-4xl">Settings</h1>
 
       <div className="py-3">
@@ -36,7 +36,7 @@ export default function Settings() {
 
       <button
         type="button"
-        className="bg-white border rounded-xl py-2 px-4"
+        className="bg-indigo-50 active:bg-white font-bold border border-indigo-900/20 text-indigo-800 ease-in-out duration-300 rounded-lg hover:rounded-xl py-2 px-4 shadow shadow-indigo-900/20"
         onClick={handleNotificationTest}
       >
         Send a test notification

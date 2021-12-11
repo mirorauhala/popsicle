@@ -2,9 +2,8 @@ import { NavLink } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <nav className="border-b px-4 flex items-center h-16">
-      <span className="font-bold pr-4">App</span>
-
+    <nav className="border-b-2 border-indigo-900/20 px-4 flex items-center h-16">
+      <span className="font-bold pr-4">Popsicle</span>
       <ul className="flex">
         <li>
           <NavLink
@@ -27,8 +26,7 @@ export default function Navbar() {
           </NavLink>
         </li>
       </ul>
-
-      <ul className="flex ml-auto">
+      <ul class="ml-auto">
         <li>
           <NavLink
             className={({ isActive }) => {

@@ -1,5 +1,6 @@
 import Task from "./Task";
 import NewTask from "./NewTask";
+import TaskHeading from "./TaskHeading";
 import { TaskContext } from "../Board";
 import { useContext } from "react";
 
@@ -14,9 +15,9 @@ export default function TaskList(props) {
   };
 
   return (
-    <div>
-      <h5 className="my-3">{props.list.name}</h5>
-      <div className="flex flex-col gap-3">
+    <div className="h-full w-80  rounded-lg">
+      <TaskHeading name={props.list.name}></TaskHeading>
+      <div className="flex flex-col gap-2">
         <NewTask list={props.list} />
         {filteredTasks()}
       </div>
