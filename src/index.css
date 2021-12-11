@@ -6,7 +6,6 @@ html,
 body,
 #root {
   min-height: 100vh;
-  @apply bg-indigo-100;
 }
 
 html,
@@ -15,7 +14,7 @@ body {
 }
 
 #routes {
-  height: calc(100vh - 4rem);
+  height: calc(100vh - 5rem);
   overflow: auto;
   @apply flex p-4;
 }

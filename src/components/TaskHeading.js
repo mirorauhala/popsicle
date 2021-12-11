@@ -44,7 +44,7 @@ export default function TaskHeading(props) {
   const edit = (
     <input
       ref={nameInputRef}
-      className="py-2 px-2 mb-3 w-full rounded-md font-bold text-indigo-900 outline-0 bg-indigo-900/20"
+      className="py-2 px-2 mb-3 w-full rounded-md font-bold text-indigo-900 outline-0 bg-indigo-900/10"
       value={newName}
       onChange={handleNewName}
       onBlur={handleOnBlur}

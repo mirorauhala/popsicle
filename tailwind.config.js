@@ -3,6 +3,7 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: ["Quicksand"],
+      logo: ["Sniglet"],
     },
     extend: {},
   },

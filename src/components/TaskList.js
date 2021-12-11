@@ -15,7 +15,7 @@ export default function TaskList(props) {
   };
 
   return (
-    <div className="h-full w-80  rounded-lg">
+    <div className="h-full w-80 p-3 bg-indigo-50 rounded-lg">
       <TaskHeading name={props.list.name}></TaskHeading>
       <div className="flex flex-col gap-2">
         <NewTask list={props.list} />
