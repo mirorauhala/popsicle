@@ -9,7 +9,7 @@ function App() {
     <>
       <Navbar />
 
-      <div id="routes" className="p-4">
+      <div id="routes">
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/about" element={<About />}/>
