@@ -3,31 +3,38 @@
     { "id": 1, "name": "First", "nextId": 2 },
     { "id": 2, "name": "Second", "nextId": "EMPTY" }
   ],
+  "tags": [
+    { "id": 1, "name": "Cool" },
+    { "id": 2, "name": "Great" }
   ],
   "tasks": [
     {
       "id": 1,
       "body": "Hello world",
       "listId": 1,
-      "nextId": 2
+      "nextId": 2,
+      "tags": [1, 2]
     },
     {
       "id": 2,
       "body": "Create working todo app",
       "listId": 1,
-      "nextId": 3
+      "nextId": 3,
+      "tags": []
     },
     {
       "id": 3,
       "body": "Make it pretty",
       "listId": 1,
-      "nextId": 4
+      "nextId": 4,
+      "tags": [1, 2]
     },
     {
       "id": 4,
       "body": "Finish in time",
       "listId": 1,
-      "nextId": "EMPTY"
+      "nextId": "EMPTY",
+      "tags": []
     }
   ]
 }

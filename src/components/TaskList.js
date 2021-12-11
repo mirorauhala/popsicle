@@ -5,11 +5,13 @@ import { TaskContext } from "../Board";
 import { useContext } from "react";
 
 export default function TaskList(props) {
-  const tasks = useContext(TaskContext);
+  const { tasks, tags } = useContext(TaskContext);
 
   const filteredTasks = () => {
     const filteredTasks = tasks.filter((task) => task.listId === props.list.id);
-    return filteredTasks.map((task) => <Task key={task.id} task={task} />);
+    return filteredTasks.map((task) => (
+      <Task key={task.id} task={task} tags={tags} />
+    ));
   };
 
   return (
