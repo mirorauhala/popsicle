@@ -26,7 +26,7 @@ export default function Navbar() {
           </NavLink>
         </li>
       </ul>
-      <ul class="ml-auto">
+      <ul className="ml-auto">
         <li>
           <NavLink
             className={({ isActive }) => {
