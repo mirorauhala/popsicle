@@ -1,18 +1,33 @@
 {
   "lists": [
-    { "id": 1, "name": "Backlog" },
-    { "id": 2, "name": "Ongoing" },
-    { "id": 3, "name": "Repro" },
-    { "id": 4, "name": "Done" }
+    { "id": 1, "name": "First", "nextId": 2 },
+    { "id": 2, "name": "Second", "nextId": "EMPTY" }
+  ],
   ],
   "tasks": [
-    { "id": 1, "body": "Create react ", "listId": 1, "nextId": 2 },
-    { "id": 2, "body": "read context api docs", "listId": 1, "nextId": 3 },
-    { "id": 3, "body": "read drag and drop docs", "listId": 1, "nextId": 4 },
-    { "id": 4, "body": "stuff", "listId": 1, "nextId": 5 },
-    { "id": 5, "body": "create vue ", "listId": 2, "nextId": 6 },
-    { "id": 6, "body": "read news", "listId": 3, "nextId": 7 },
-    { "id": 7, "body": "use colors", "listId": 4, "nextId": 8 },
-    { "id": 8, "body": "create things", "listId": 2, "nextId": "EMPTY" }
+    {
+      "id": 1,
+      "body": "Hello world",
+      "listId": 1,
+      "nextId": 2
+    },
+    {
+      "id": 2,
+      "body": "Create working todo app",
+      "listId": 1,
+      "nextId": 3
+    },
+    {
+      "id": 3,
+      "body": "Make it pretty",
+      "listId": 1,
+      "nextId": 4
+    },
+    {
+      "id": 4,
+      "body": "Finish in time",
+      "listId": 1,
+      "nextId": "EMPTY"
+    }
   ]
 }

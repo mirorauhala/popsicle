@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import sortList from "../api/sortList";
 
 export default function useFetchLists() {
   const [lists, setLists] = useState([]);
@@ -8,7 +9,8 @@ export default function useFetchLists() {
       const response = await fetch("http://localhost:3010/lists");
       const responseJson = await response.json();
 
-      setLists(responseJson);
+      // need to reverse the list order
+      setLists(sortList(responseJson).reverse());
     };
 
     loadLists();

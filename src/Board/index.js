@@ -12,10 +12,10 @@ export default function Board() {
   const addTask = (e) => {
     e.preventDefault();
 
-    const board = parseInt(e.target.elements["board"].value);
+    const list = parseInt(e.target.elements["board"].value);
     const body = e.target.elements[1].value;
 
-    setTasks([...tasks, { id: 9, body: body, boardId: board }]);
+    setTasks([...tasks, { id: 9, body: body, listId: list }]);
   };
 
   return (
