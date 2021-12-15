@@ -1,8 +1,16 @@
 {
   "listOrder": ["list-1", "list-2"],
   "lists": [
-    { "id": "list-1", "name": "First" },
-    { "id": "list-2", "name": "Second" }
+    {
+      "id": "list-1",
+      "name": "First",
+      "tasks": ["task-1", "task-2", "task-3", "task-4"]
+    },
+    {
+      "id": "list-2",
+      "name": "Second",
+      "tasks": []
+    }
   ],
   "tags": [
     { "id": 1, "name": "Cool" },
@@ -10,31 +18,23 @@
   ],
   "tasks": [
     {
-      "id": 1,
+      "id": "task-1",
       "body": "Hello world",
-      "listId": 1,
-      "nextId": 2,
       "tags": [1, 2]
     },
     {
-      "id": 2,
+      "id": "task-2",
       "body": "Create working todo app",
-      "listId": 1,
-      "nextId": 3,
       "tags": []
     },
     {
-      "id": 3,
+      "id": "task-3",
       "body": "Make it pretty",
-      "listId": 1,
-      "nextId": 4,
       "tags": [1, 2]
     },
     {
-      "id": 4,
+      "id": "task-4",
       "body": "Finish in time",
-      "listId": 1,
-      "nextId": "EMPTY",
       "tags": []
     }
   ]
