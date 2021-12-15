@@ -20,14 +20,14 @@ export default function Task({task, index, tags}) {
         ref={provided.innerRef}
         {...provided.draggableProps}
         {...provided.dragHandleProps}
-        className="group flex gap-2 p-3 mb-2 justify-between bg-white rounded-md text-slate-600 transition-shadow ease-in-out duration-300 shadow hover:shadow-lg shadow-indigo-800/20"
+        className="group flex gap-2 p-3 mb-2 justify-between bg-white rounded-md text-slate-600 transition-shadow ease-in-out duration-300 shadow hover:shadow-lg hover:shadow-indigo-800/20"
       >
-          <input type="checkbox" className="mt-1 mx-1" />
+        <input type="checkbox" className="mt-1 mx-1" />
 
-          <div className="flex grow flex-col">
-            <p className="font-bold">{task.body}</p>
-            {/*<Tags tags={filterTags()} />*/}
-          </div>
+        <div className="flex grow flex-col">
+          <p className="font-bold">{task.body}</p>
+          {/*<Tags tags={filterTags()} />*/}
+        </div>
 
           <button className="opacity-0 group-hover:opacity-100 transition ease-in-out delay-100 w-6 h-6 rounded bg-indigo-100">
             <span className="sr-only">Open actions</span>

@@ -8,7 +8,7 @@ export default function List({tasks, index, list, tags}) {
     <Draggable draggableId={list.id} index={index}>
       {(provided) => (
         <div ref={provided.innerRef} {...provided.draggableProps}
-            className="h-full w-80 p-3 bg-indigo-50 rounded-lg">
+            className="flex flex-col  mr-3 w-80 shrink-0 bg-indigo-50 rounded-lg">
           <TaskHeading name={list.name} dragHandleProps={provided.dragHandleProps}></TaskHeading>
           <NewTask list={list} />
 

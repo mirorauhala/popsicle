@@ -23,7 +23,7 @@ export default function Board() {
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
-            className="flex gap-3 justify-between mb-3">
+             id="board">
               {tasks.length > 0 && lists.length > 0 && listOrder.length > 0 && listOrder.map((listId, index) => {
                 const list = lists.find(list => list.id === listId)
                 const tasksForList = list.tasks.map(taskId => {

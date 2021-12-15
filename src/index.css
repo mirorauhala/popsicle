@@ -13,10 +13,9 @@ body {
   overflow: hidden;
 }
 
-#routes {
-  height: calc(100vh - 5rem);
-  overflow: auto;
-  @apply flex p-4;
+#board {
+  height: calc(100vh - 6rem);
+  @apply flex pb-4 items-start px-4 mb-3 overflow-x-auto;
 }
 
 code {

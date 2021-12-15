@@ -9,13 +9,11 @@ function App() {
     <>
       <Navbar />
 
-      <div id="routes">
-        <Routes>
-          <Route path="/" element={<Home />}/>
-          <Route path="/about" element={<About />}/>
-          <Route path="/settings" element={<Settings />}/>
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<Home />}/>
+        <Route path="/about" element={<About />}/>
+        <Route path="/settings" element={<Settings />}/>
+      </Routes>
 
     </>
   );
