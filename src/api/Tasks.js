@@ -41,3 +41,34 @@ export const TaskAddToList = async (taskId, listId) => {
     throw new Error(e);
   }
 }
+
+export const TaskDelete = async (taskId, listId) => {
+  try {
+    const newList = await DeleteTaskFromList(taskId, listId)
+    await axios.delete(process.env.REACT_APP_BACKEND_ENDPOINT + '/tasks/' + taskId)
+
+    return newList
+  } catch(e) {
+    throw new Error(e);
+  }
+}
+
+export const DeleteTaskFromList = async (taskId, listId) => {
+  try {
+    const list = await ListFind(listId)
+
+    // remove the task from the list
+    const newTasksList = list.tasks.filter(task => task !== taskId)
+
+    // create axios patch body
+    const data = {
+      tasks: newTasksList
+    }
+
+    const result = await axios.patch(process.env.REACT_APP_BACKEND_ENDPOINT + '/lists/' + listId, data)
+
+    return result.data;
+  } catch(e) {
+    throw new Error(e);
+  }
+}

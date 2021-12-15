@@ -1,18 +1,20 @@
 import { useState, useEffect } from "react";
+import {GetSetting} from "../api/Settings";
 
 export default function useFetchListOrder() {
   const [listOrder, setListOrder] = useState([]);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     const loadListOrder = async () => {
-      const response = await fetch("http://localhost:3010/listOrder");
-      const responseJson = await response.json();
+      const listOrder = await GetSetting('listOrder')
 
-      setListOrder(responseJson);
+      setListOrder(listOrder.value);
+      setIsReady(true)
     };
 
     loadListOrder();
   }, []);
 
-  return [listOrder, setListOrder];
+  return [listOrder, setListOrder, isReady];
 }

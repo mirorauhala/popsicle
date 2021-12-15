@@ -1,61 +1,17 @@
 {
-  "listOrder": [
-    1,
-    2
-  ],
-  "lists": [
+  "settings": [
     {
       "id": 1,
-      "name": "First",
-      "tasks": [
-        1,
-        2,
-        3,
-        4
-      ]
+      "key": "listOrder",
+      "value": []
     },
     {
       "id": 2,
-      "name": "Second",
-      "tasks": []
+      "key": "filter",
+      "value": 0
     }
   ],
-  "tags": [
-    {
-      "id": 1,
-      "name": "Cool"
-    },
-    {
-      "id": 2,
-      "name": "Great"
-    }
-  ],
-  "tasks": [
-    {
-      "id": 1,
-      "body": "Hello world",
-      "tags": [
-        1,
-        2
-      ]
-    },
-    {
-      "id": 2,
-      "body": "Create working todo app",
-      "tags": []
-    },
-    {
-      "id": 3,
-      "body": "Make it pretty",
-      "tags": [
-        1,
-        2
-      ]
-    },
-    {
-      "id": 4,
-      "body": "Finish in time",
-      "tags": []
-    }
-  ]
+  "lists": [],
+  "tags": [],
+  "tasks": []
 }
