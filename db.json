@@ -1,39 +1,59 @@
 {
-  "listOrder": ["list-1", "list-2"],
+  "listOrder": [
+    1,
+    2
+  ],
   "lists": [
     {
-      "id": "list-1",
+      "id": 1,
       "name": "First",
-      "tasks": ["task-1", "task-2", "task-3", "task-4"]
+      "tasks": [
+        1,
+        2,
+        3,
+        4
+      ]
     },
     {
-      "id": "list-2",
+      "id": 2,
       "name": "Second",
       "tasks": []
     }
   ],
   "tags": [
-    { "id": 1, "name": "Cool" },
-    { "id": 1, "name": "Great" }
+    {
+      "id": 1,
+      "name": "Cool"
+    },
+    {
+      "id": 2,
+      "name": "Great"
+    }
   ],
   "tasks": [
     {
-      "id": "task-1",
+      "id": 1,
       "body": "Hello world",
-      "tags": [1, 2]
+      "tags": [
+        1,
+        2
+      ]
     },
     {
-      "id": "task-2",
+      "id": 2,
       "body": "Create working todo app",
       "tags": []
     },
     {
-      "id": "task-3",
+      "id": 3,
       "body": "Make it pretty",
-      "tags": [1, 2]
+      "tags": [
+        1,
+        2
+      ]
     },
     {
-      "id": "task-4",
+      "id": 4,
       "body": "Finish in time",
       "tags": []
     }

@@ -1,5 +1,6 @@
 import Tags from "./Tags";
 import {Draggable} from "react-beautiful-dnd";
+import {getId} from "../utilities";
 
 export default function Task({task, index, tags}) {
   const filterTags = () => {
@@ -13,7 +14,7 @@ export default function Task({task, index, tags}) {
   };
 
   return (
-    <Draggable draggableId={task.id} index={index}>
+    <Draggable draggableId={getId('task', task.id)} index={index}>
       {(provided, snapshot) => (
 
       <div
