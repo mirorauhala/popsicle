@@ -17,11 +17,11 @@ export default function Task(props) {
 
       <div className="flex grow flex-col">
         <p className="font-bold">{props.task.body}</p>
-        <Tags tags={filterTags()} />
+        {/*<Tags tags={filterTags()} />*/}
       </div>
 
       <button className="opacity-0 group-hover:opacity-100 transition ease-in-out delay-100 w-6 h-6 rounded bg-indigo-100">
-        <span class="sr-only">Open actions</span>
+        <span className="sr-only">Open actions</span>
         <div className="flex gap-[2px] justify-center">
           <div className="w-1 h-1 bg-slate-500 rounded-full"></div>
           <div className="w-1 h-1 bg-slate-500 rounded-full"></div>

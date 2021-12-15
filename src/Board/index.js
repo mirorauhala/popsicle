@@ -1,33 +1,44 @@
-import TaskList from "../components/TaskList";
+import List from "../components/List";
 import useFetchTasks from "../hooks/useFetchTasks";
 import useFetchLists from "../hooks/useFetchLists";
 import useFetchTags from "../hooks/useFetchTags";
 import { createContext } from "react";
+import {DragDropContext, Droppable} from "react-beautiful-dnd";
+import useFetchListOrder from "../hooks/useFetchListOrder";
 
 export const TaskContext = createContext([]);
 
 export default function Board() {
+  const [listOrder, setListOrder] = useFetchListOrder();
   const [lists, setLists] = useFetchLists();
   const [tasks, setTasks] = useFetchTasks();
   const [tags, setTags] = useFetchTags();
 
-  const addTask = (e) => {
-    e.preventDefault();
-
-    const list = parseInt(e.target.elements["board"].value);
-    const body = e.target.elements[1].value;
-
-    setTasks([...tasks, { id: 9, body: body, listId: list }]);
-  };
-
-  const TaskContextValue = { tasks, tags };
+  const onDragEnd = () => {
+    //
+  }
 
   return (
-    <div className="flex gap-3 w-full">
-      <TaskContext.Provider value={TaskContextValue}>
-        {lists.length > 0 &&
-          lists.map((list) => <TaskList key={list.id} list={list} />)}
-      </TaskContext.Provider>
-    </div>
+    <DragDropContext
+      onDragEnd={onDragEnd}>
+      <Droppable droppableId="all-columns" direction="horizontal" type="column">
+        {(provided) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            className="flex gap-3 justify-between mb-3">
+              {lists.length > 0 && listOrder.length > 0 &&
+                listOrder.map((listId, index) => {
+                const list = lists.find(list => list.id === listId)
+
+                return <List key={list.id} index={index} tasks={tasks} list={list} tag={tags}/>
+              })}
+
+
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 }

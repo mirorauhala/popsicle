@@ -1,11 +1,12 @@
 {
+  "listOrder": ["list-1", "list-2"],
   "lists": [
-    { "id": 1, "name": "First", "nextId": 2 },
-    { "id": 2, "name": "Second", "nextId": "EMPTY" }
+    { "id": "list-1", "name": "First" },
+    { "id": "list-2", "name": "Second" }
   ],
   "tags": [
     { "id": 1, "name": "Cool" },
-    { "id": 2, "name": "Great" }
+    { "id": 1, "name": "Great" }
   ],
   "tasks": [
     {
