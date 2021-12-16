@@ -4,7 +4,7 @@ import {ListFind} from "./Lists";
 export const TaskCreate = async (body, listId) => {
   const data = {
     body: body,
-    date: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
     tags: []
   }
 
