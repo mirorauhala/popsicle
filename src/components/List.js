@@ -6,14 +6,14 @@ import {getId} from "../utilities";
 
 export default function List({tasks, index, list, tags, handleNewTask, handleTaskDelete, onTaskUpdate}) {
   return (
-    <Draggable draggableId={getId(list.id)} index={index}>
+    <Draggable draggableId={getId('list', list.id)} index={index}>
       {(provided) => (
         <div ref={provided.innerRef} {...provided.draggableProps}
             className="flex flex-col relative mr-3 w-80 shrink-0 bg-indigo-50 rounded-lg">
           <TaskHeading name={list.name} dragHandleProps={provided.dragHandleProps}></TaskHeading>
           <NewTask list={list} handleNewTask={handleNewTask} />
 
-          <Droppable droppableId={getId(list.id)} type="task" className="overflow-x-auto">
+          <Droppable droppableId={getId('list', list.id)} type="task" className="overflow-x-auto">
             {(provided, snapshot) => (
               <div
                 ref={provided.innerRef}
