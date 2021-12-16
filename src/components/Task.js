@@ -2,11 +2,15 @@ import Tags from "./Tags";
 import {Draggable} from "react-beautiful-dnd";
 import {getId} from "../utilities";
 import {useEffect, useRef, useState} from "react";
+import TaskBody from "./TaskBody";
+import {TaskEdit} from "../api/Tasks";
+import Spinner from "./Spinner";
 
-export default function Task({task, list, index, tags, handleTaskDelete}) {
-  let menuRef = useRef(null);
-
-  const [showMenu, setShowMenu] = useState(false)
+export default function Task({task, list, index, tags, handleTaskDelete, onTaskUpdate}) {
+  const menuRef = useRef(null)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isEditable, setIsEditable] = useState(false)
 
   const filterTags = () => {
     if (tags.length === 0) {
@@ -18,9 +22,37 @@ export default function Task({task, list, index, tags, handleTaskDelete}) {
     });
   };
 
+  /**
+   * Save the edited task on commit.
+   *
+   * There are multiple triggers for commits. One is when the user
+   * hits the enter key, another when clicking outside the
+   * editable task body.
+   *
+   * @param {string} body
+   * @returns {Promise<void>}
+   */
+  const handleTaskCommit = async (body) => {
+    setIsEditable(false)
+    setIsLoading(true)
+    const newTask = await TaskEdit(task.id, body)
+
+    // at minimum 500ms loading animation
+    setTimeout(() => {
+      setIsLoading(false)
+      setIsEditable(true)
+    }, 500)
+
+    onTaskUpdate(newTask)
+  }
+
+  /**
+   * Close the menu when clicking outside the menu.
+   * @param {PointerEvent} event
+   */
   const handleClickOutside = (event) => {
     if (menuRef.current && !menuRef.current.contains(event.target)) {
-      setShowMenu(false)
+      setIsMenuOpen(false)
     }
   };
 
@@ -31,22 +63,6 @@ export default function Task({task, list, index, tags, handleTaskDelete}) {
     };
   });
 
-  const openMenu = () => {
-
-    setShowMenu(true)
-
-  }
-
-  const closeMenu = () => {
-    setShowMenu(false);
-    //document.removeEventListener('click', closeMenu);
-  }
-
-  const closeMenuAfter = (cb) => {
-    cb()
-    closeMenu()
-  }
-
   return (
     <Draggable draggableId={getId('task', task.id)} index={index}>
       {(provided, snapshot) => (
@@ -55,18 +71,27 @@ export default function Task({task, list, index, tags, handleTaskDelete}) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className="relative group flex gap-2 p-3 mb-2 justify-between bg-white rounded-md text-slate-600 transition-shadow ease-in-out duration-300 shadow hover:shadow-lg hover:shadow-indigo-800/20"
+          className={`relative group flex gap-2 p-3 mb-2 justify-between rounded-md text-slate-600 transition ease-in-out duration-300
+            ${isLoading ? 'bg-white/70 shadow' : 'bg-white shadow hover:shadow-lg hover:shadow-indigo-800/20'}`}
         >
-          <input type="checkbox" className="mt-1 mx-1" />
+          <div className="flex shrink-0 items-center flex-col w-6">
+            <input type="checkbox" className="mt-1 w-4 mb-3 h-4" />
+            {isLoading ? <Spinner /> : null}
+          </div>
 
-          <div className="flex grow flex-col">
-            <p className="font-bold items-start break-all	">{task.body}</p>
+          <div className="flex shrink basis-full flex-col">
+            <TaskBody
+              value={task.body}
+              isEditable={isEditable}
+              setEditable={(value) => setIsEditable(value)}
+              onCommit={handleTaskCommit}
+            />
             <Tags tags={filterTags()} />
           </div>
 
           <button
             className="opacity-0 group-hover:opacity-100 transition ease-in-out delay-100 w-6 h-6 rounded bg-indigo-100"
-            onClick={openMenu}>
+            onClick={() => setIsMenuOpen(true)}>
             <span className="sr-only">Open actions</span>
             <div className="flex gap-[2px] p-1 justify-center">
               <div className="w-1 h-1 bg-slate-500 rounded-full"></div>
@@ -76,14 +101,17 @@ export default function Task({task, list, index, tags, handleTaskDelete}) {
           </button>
 
           {
-            showMenu
+            isMenuOpen
               ? (
                 <div ref={menuRef} className="flex flex-col border border-indigo-900/10 px-2 py-3 rounded-lg absolute bg-white w-28 top-[46px] right-0 z-50 shadow-xl shadow-indigo-800/20">
                   <button className="py-2 px-3 rounded-lg font-medium text-left hover:bg-gray-100">Edit</button>
                   <button className="py-2 px-3 rounded-lg font-medium text-left hover:bg-gray-100">Tags</button>
                   <button
                     className="py-2 px-3 rounded-lg font-medium text-left hover:bg-gray-100"
-                    onClick={() => closeMenuAfter(() => handleTaskDelete(task.id, list.id))}
+                    onClick={() => {
+                      setIsMenuOpen(false)
+                      handleTaskDelete(task.id, list.id)
+                    }}
                   >Delete</button>
                 </div>
               )

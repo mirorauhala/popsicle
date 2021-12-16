@@ -72,3 +72,20 @@ export const DeleteTaskFromList = async (taskId, listId) => {
     throw new Error(e);
   }
 }
+
+export const TaskEdit = async (taskId, body) => {
+  const data = {
+    body: body,
+    updated_at: new Date().toISOString(),
+    tags: []
+  }
+
+  try {
+    const result = await axios.patch(process.env.REACT_APP_BACKEND_ENDPOINT + '/tasks/'+ taskId, data)
+
+    return result.data;
+  } catch(e) {
+    throw new Error(e);
+  }
+}
+

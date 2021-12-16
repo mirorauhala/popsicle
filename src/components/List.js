@@ -4,7 +4,7 @@ import TaskHeading from "./TaskHeading";
 import {Draggable, Droppable} from "react-beautiful-dnd";
 import {getId} from "../utilities";
 
-export default function List({tasks, index, list, tags, handleNewTask, handleTaskDelete}) {
+export default function List({tasks, index, list, tags, handleNewTask, handleTaskDelete, onTaskUpdate}) {
   return (
     <Draggable draggableId={getId(list.id)} index={index}>
       {(provided) => (
@@ -22,9 +22,6 @@ export default function List({tasks, index, list, tags, handleNewTask, handleTas
               >
 
                 {tasks.length > 0 && tasks.map((task, index) => {
-
-                  console.log(task)
-
                   return (
                     <Task
                       key={getId('task', task.id)}
@@ -33,6 +30,7 @@ export default function List({tasks, index, list, tags, handleNewTask, handleTas
                       task={task}
                       tags={tags}
                       handleTaskDelete={handleTaskDelete}
+                      onTaskUpdate={onTaskUpdate}
                     />
                   )
                 })}

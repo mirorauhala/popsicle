@@ -45,6 +45,18 @@ export default function Home() {
     })
   }
 
+  const handleTaskUpdate = async (newTask) => {
+    setTasks(tasks => {
+      return tasks.map(task => {
+        if(task.id === newTask.id) {
+          return newTask
+        }
+
+        return task;
+      })
+    })
+  }
+
   const onDragEnd = () => {
     //
   }
@@ -63,8 +75,6 @@ export default function Home() {
         return tasks.find(task => getId('task', task.id) === getId('task', taskId))
       }) : []
 
-      console.log(tasks)
-
       return (
         <List
           key={getId('list', list.id)}
@@ -74,6 +84,7 @@ export default function Home() {
           tags={tags}
           handleNewTask={handleNewTask}
           handleTaskDelete={handleTaskDelete}
+          onTaskUpdate={handleTaskUpdate}
         />
       )
     })

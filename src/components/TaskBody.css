@@ -1,0 +1,9 @@
+/*
+ * Different browsers render contentEditable differently. This is a hacky way of not showing newlines during typing
+ * as they will get sanitized during saving.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Editable_content#differences_in_markup_generation
+ */
+.TaskBody div { display: inline;}
+.TaskBody br { display: none;}
+.TaskBody p { display: inline;}
