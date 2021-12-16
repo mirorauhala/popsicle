@@ -1,0 +1,66 @@
+/* Spinner source from https://loading.io/css/
+ * License CC0
+ */
+
+.spinner {
+  display: inline-block;
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+.spinner div {
+  transform-origin: 12px 12px;
+  animation: spinner .9s linear infinite;
+}
+.spinner div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 16px;
+  left: 11px;
+  width: 2px;
+  height: 6px;
+  border-radius: 20%;
+  @apply bg-gray-400;
+}
+
+.spinner div:nth-child(1) {
+  transform: rotate(0deg);
+  animation-delay: -1s;
+}
+.spinner div:nth-child(2) {
+  transform: rotate(45deg);
+  animation-delay: calc(-1s + 100ms * 1);
+}
+.spinner div:nth-child(3) {
+  transform: rotate(90deg);
+  animation-delay: calc(-1s + 100ms * 2);
+}
+.spinner div:nth-child(4) {
+  transform: rotate(135deg);
+  animation-delay: calc(-1s + 100ms * 4);
+}
+.spinner div:nth-child(5) {
+  transform: rotate(180deg);
+  animation-delay: calc(-1s + 100ms * 5);
+}
+.spinner div:nth-child(6) {
+  transform: rotate(225deg);
+  animation-delay: calc(-1s + 100ms * 6);
+}
+.spinner div:nth-child(7) {
+  transform: rotate(270deg);
+  animation-delay: calc(-1s + 100ms * 7);
+}
+.spinner div:nth-child(8) {
+  transform: rotate(315deg);
+  animation-delay: calc(-1s + 100ms * 8);
+}
+@keyframes spinner {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
