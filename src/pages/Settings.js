@@ -1,3 +1,5 @@
+import Button from "../components/Button";
+
 export default function Settings() {
   const handleNotifications = (e) => {
     Notification.requestPermission().then(function (result) {
@@ -34,13 +36,7 @@ export default function Settings() {
         />
       </div>
 
-      <button
-        type="button"
-        className="bg-indigo-50 active:bg-white font-bold border border-indigo-900/20 text-indigo-800 ease-in-out duration-300 rounded-lg hover:rounded-xl py-2 px-4 shadow shadow-indigo-900/20"
-        onClick={handleNotificationTest}
-      >
-        Send a test notification
-      </button>
+      <Button onClick={handleNotificationTest}>Send a test notification</Button>
     </div>
   );
 }

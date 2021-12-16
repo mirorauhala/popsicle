@@ -7,6 +7,7 @@ import useFetchListOrder from "../hooks/useFetchListOrder";
 import {getId} from "../utilities";
 import {TaskCreate, TaskDelete} from "../api/Tasks";
 import {ListCreate} from "../api/Lists";
+import Button from "../components/Button";
 
 export default function Board() {
   const [listOrder, setListOrder, isReady] = useFetchListOrder();
@@ -103,12 +104,7 @@ export default function Board() {
     return isReady ? (
       <div className="flex flex-col gap-5 justify-center items-center w-full h-full pb-32">
         <h1 className="text-2xl font-medium text-indigo-900">Start by adding a new list</h1>
-        <button
-          className="bg-indigo-50 active:bg-white font-bold border border-indigo-900/20 text-indigo-800 ease-in-out duration-100 rounded-xl active:rounded-md active:rounded py-2 px-4 shadow shadow-indigo-900/20"
-          onClick={addList}
-        >
-          Create a new list
-        </button>
+        <Button onClick={addList}>Create a new list</Button>
       </div>
     ) : null
   }
@@ -119,10 +115,7 @@ export default function Board() {
     >
 
       <div className="flex gap-2 items-center px-4 pb-4">
-        <button
-          className="border px-3 py-2 border rounded-lg bg-indigo-50/50"
-          onClick={addList}
-        >New list</button>
+        <Button onClick={addList}>New list</Button>
         <input type="search" className="px-4 py-2 rounded-lg border" placeholder="Search tasks..." />
 
         <div className="ml-auto flex gap-2 items-center">
