@@ -157,6 +157,8 @@ export default function Home() {
         tasks: newTasks,
       };
 
+      SaveTasksToList(home.id, newTasks)
+
       const newLists = lists.map(list => {
         if(list.id === home.id) {
           return newHome
