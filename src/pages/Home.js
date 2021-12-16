@@ -4,10 +4,11 @@ import useFetchLists from "../hooks/useFetchLists";
 import useFetchTags from "../hooks/useFetchTags";
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
 import useFetchListOrder from "../hooks/useFetchListOrder";
-import {getId} from "../utilities";
+import {getId, getIdAsNumber} from "../utilities";
 import {TaskCreate, TaskDelete} from "../api/Tasks";
-import {ListCreate} from "../api/Lists";
+import {ListCreate, SaveListOrder, SaveTasksToList} from "../api/Lists";
 import Button from "../components/Button";
+import Log from "tailwindcss/lib/util/log";
 
 export default function Home() {
   const [listOrder, setListOrder, isReady] = useFetchListOrder();
@@ -55,10 +56,6 @@ export default function Home() {
         return task;
       })
     })
-  }
-
-  const onDragEnd = () => {
-    //
   }
 
   const isBoardEmpty = () => {
@@ -118,6 +115,96 @@ export default function Home() {
         <Button onClick={addList}>Create a new list</Button>
       </div>
     ) : null
+  }
+
+  const onDragEnd = (result) => {
+    const { destination, source, draggableId, type } = result;
+
+    if (!destination) {
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    // if we're moving columns aka lists
+    if (type === 'column') {
+      const newOrder = Array.from(listOrder);
+      newOrder.splice(source.index, 1);
+      newOrder.splice(destination.index, 0, getIdAsNumber(draggableId));
+
+      // save new list order
+      SaveListOrder(newOrder).then(_ => console.log('Saved new list order!'))
+      setListOrder(newOrder);
+      return;
+    }
+
+    const home = lists.find(list => list.id === getIdAsNumber(source.droppableId));
+    const foreign = lists.find(list => list.id === getIdAsNumber(destination.droppableId));
+
+    // if we're moving tasks inside the same list
+    if (home.id === foreign.id) {
+      const newTasks = Array.from(home.tasks);
+      newTasks.splice(source.index, 1);
+      newTasks.splice(destination.index, 0, getIdAsNumber(draggableId));
+
+      const newHome = {
+        ...home,
+        tasks: newTasks,
+      };
+
+      const newLists = lists.map(list => {
+        if(list.id === home.id) {
+          return newHome
+        }
+
+        return list
+      })
+
+      setLists(newLists);
+
+      return;
+    }
+
+    // moving from one list to another
+    const homeTasks = Array.from(home.tasks);
+    homeTasks.splice(source.index, 1);
+    const newHome = {
+      ...home,
+      tasks: homeTasks,
+    };
+
+    // save "home" list
+    SaveTasksToList(home.id, homeTasks)
+
+    const foreignTasks = Array.from(foreign.tasks);
+    foreignTasks.splice(destination.index, 0, getIdAsNumber(draggableId));
+    const newForeign = {
+      ...foreign,
+      tasks: foreignTasks,
+    };
+
+    // save "foreign" list
+    SaveTasksToList(foreign.id, foreignTasks)
+
+    // add lists to state
+    const newList = lists.map(list => {
+      if(list.id === home.id) {
+        return newHome
+      }
+
+      if(list.id === foreign.id) {
+        return newForeign
+      }
+
+      return list
+    })
+
+    setLists(newList);
   }
 
   return (

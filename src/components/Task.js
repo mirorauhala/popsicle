@@ -71,7 +71,7 @@ export default function Task({task, list, index, tags, handleTaskDelete, onTaskU
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className={`relative group flex gap-2 p-3 mb-2 justify-between rounded-md text-slate-600 transition ease-in-out duration-300
+          className={`relative group flex gap-2 p-3 mb-2 justify-between rounded-md text-slate-600 transition-shadow ease-in-out duration-300
             ${isLoading ? 'bg-white/70 shadow' : 'bg-white shadow hover:shadow-lg hover:shadow-indigo-800/20'}`}
         >
           <div className="flex shrink-0 items-center flex-col w-6">
