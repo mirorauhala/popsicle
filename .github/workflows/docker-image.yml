@@ -28,3 +28,5 @@ jobs:
         with:
           push: true
           tags: mirorauhala/popsicle:latest
+          secrets: |
+            GIT_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
