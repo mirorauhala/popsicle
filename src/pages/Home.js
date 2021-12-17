@@ -109,27 +109,35 @@ export default function Home() {
   }
 
   /**
-   * Handler for list deletion
+   * Handler for list deletion.
    * @param {number} listId
    * @returns {Promise<void>}
    */
   const handleListDelete = async (listId) => {
-    await ListDelete(listId);
 
+    // delete the list from list order
+    setListOrder(listIds => {
+      return listIds.filter(id => id !== listId)
+    })
+
+    // delete the lists' tasks
+    const list = lists.find(list => list.id === listId)
+
+    setTasks(tasks => {
+      return tasks.filter(task => {
+        return !list.tasks.includes(task.id)
+      })
+    })
+
+    // delete the list from lists
     setLists(lists => {
       return lists.filter(list => {
         return list.id !== listId
       })
     })
 
-    setListOrder(listIds => {
-      return listIds.filter(id => id !== listId)
-    })
-
-    const newTasks = await TaskAll()
-    console.log(newTasks)
-    setTasks(newTasks)
-
+    // delete the list from server
+    await ListDelete(listId);
   }
 
   const onBoarding = () => {
@@ -229,6 +237,8 @@ export default function Home() {
 
       return list
     })
+
+
 
     setLists(newList);
   }
