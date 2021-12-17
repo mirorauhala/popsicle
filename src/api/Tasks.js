@@ -1,9 +1,9 @@
-import axios from "axios";
 import {ListFind} from "./Lists";
+import {endpoint} from "./endpoint";
 
 export const TaskAll = async () => {
   try {
-    const result = await axios.get(process.env.REACT_APP_BACKEND_ENDPOINT + '/tasks')
+    const result = await endpoint.get( '/tasks')
 
     return result.data;
   } catch(e) {
@@ -20,7 +20,7 @@ export const TaskCreate = async (body, listId) => {
   }
 
   try {
-    const result = await axios.post(process.env.REACT_APP_BACKEND_ENDPOINT + '/tasks', data)
+    const result = await endpoint.post( '/tasks', data)
     const newTask = result.data;
     const newList = await TaskAddToList(newTask.id, listId)
 
@@ -45,7 +45,7 @@ export const TaskAddToList = async (taskId, listId) => {
       tasks: Array.from(currentTasks)
     }
 
-    const result = await axios.patch(process.env.REACT_APP_BACKEND_ENDPOINT + '/lists/' + listId, data)
+    const result = await endpoint.patch( '/lists/' + listId, data)
 
     return result.data;
   } catch(e) {
@@ -56,7 +56,7 @@ export const TaskAddToList = async (taskId, listId) => {
 export const TaskDelete = async (taskId, listId) => {
   try {
     const newList = await DeleteTaskFromList(taskId, listId)
-    await axios.delete(process.env.REACT_APP_BACKEND_ENDPOINT + '/tasks/' + taskId)
+    await endpoint.delete('/tasks/' + taskId)
 
     return newList
   } catch(e) {
@@ -76,7 +76,7 @@ export const DeleteTaskFromList = async (taskId, listId) => {
       tasks: newTasksList
     }
 
-    const result = await axios.patch(process.env.REACT_APP_BACKEND_ENDPOINT + '/lists/' + listId, data)
+    const result = await endpoint.patch( '/lists/' + listId, data)
 
     return result.data;
   } catch(e) {
@@ -92,7 +92,7 @@ export const TaskEdit = async (taskId, body) => {
   }
 
   try {
-    const result = await axios.patch(process.env.REACT_APP_BACKEND_ENDPOINT + '/tasks/'+ taskId, data)
+    const result = await endpoint.patch('/tasks/'+ taskId, data)
 
     return result.data;
   } catch(e) {

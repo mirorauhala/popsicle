@@ -1,8 +1,17 @@
-import axios from "axios";
 import {GetSetting, SetSetting} from "./Settings";
-import List from "../components/List";
 import {TaskDelete} from "./Tasks";
+import {endpoint} from "./endpoint";
 
+
+export const ListAll = async () => {
+  try {
+    const result = await endpoint.get( '/lists')
+
+    return result.data;
+  } catch(e) {
+    throw new Error(e);
+  }
+}
 export const ListCreate = async (name) => {
   try {
     const data = {
@@ -10,7 +19,7 @@ export const ListCreate = async (name) => {
       tasks: []
     }
 
-    const result = await axios.post(process.env.REACT_APP_BACKEND_ENDPOINT + '/lists', data)
+    const result = await endpoint.post('/lists', data)
     const newList = result.data
 
     const newListOrder = await AddToListOrder(newList.id)
@@ -23,7 +32,7 @@ export const ListCreate = async (name) => {
 
 export const ListFind = async (listId) => {
   try {
-    const result = await axios.get(process.env.REACT_APP_BACKEND_ENDPOINT + '/lists/' + listId)
+    const result = await endpoint.get('/lists/' + listId)
 
     return result.data
   } catch(e) {
@@ -52,7 +61,7 @@ export const ListDelete = async (listId) => {
     await DeleteFromListOrder(listId)
 
     // delete list itself
-    const result = await axios.delete(process.env.REACT_APP_BACKEND_ENDPOINT + '/lists/' + listId)
+    const result = await endpoint.delete('/lists/' + listId)
     return result.data
   } catch(e) {
     throw new Error(e)
@@ -95,7 +104,6 @@ export const AddToListOrder = async (listId) => {
 export const DeleteFromListOrder = async (listId) => {
   try {
     const listOrderSetting = await GetSetting("listOrder")
-    const newOrder = new Set()
     const listOrder = Array.from(listOrderSetting.value);
 
     const listIndex = listOrder.indexOf(listId)
@@ -133,7 +141,7 @@ export const SaveTasksToList = async (listId, tasks) => {
       tasks: tasks
     }
 
-    const result = await axios.patch(process.env.REACT_APP_BACKEND_ENDPOINT + '/lists/' + listId, data)
+    const result = await endpoint.patch('/lists/' + listId, data)
 
     return result.data;
   } catch(e) {

@@ -6,14 +6,12 @@ export default function useFetchListOrder() {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    const loadListOrder = async () => {
+    (async () => {
       const listOrder = await GetSetting('listOrder')
 
       setListOrder(listOrder.value);
       setIsReady(true)
-    };
-
-    loadListOrder();
+    })()
   }, []);
 
   return [listOrder, setListOrder, isReady];

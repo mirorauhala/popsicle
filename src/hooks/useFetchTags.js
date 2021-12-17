@@ -1,17 +1,13 @@
 import { useState, useEffect } from "react";
+import {TagAll} from "../api/Tags";
 
 export default function useFetchTags() {
   const [tags, setTags] = useState([]);
 
   useEffect(() => {
-    const loadTags = async () => {
-      const response = await fetch("http://localhost:3010/tags");
-      const responseJson = await response.json();
-
-      setTags(responseJson);
-    };
-
-    loadTags();
+    (async () => {
+      setTags(await TagAll());
+    })()
   }, []);
 
   return [tags, setTags];

@@ -1,8 +1,8 @@
-import axios from "axios";
+import {endpoint} from "./endpoint";
 
 export const GetSetting = async (key) => {
   try {
-    const result = await axios.get(process.env.REACT_APP_BACKEND_ENDPOINT + '/settings/?key=' + key)
+    const result = await endpoint.get('/settings/?key=' + key)
 
     return result.data[0]
   } catch(e) {
@@ -15,7 +15,7 @@ export const SetSetting = async (settingId, value) => {
     const data = {
       value: value
     }
-    const result = await axios.patch(process.env.REACT_APP_BACKEND_ENDPOINT + '/settings/'+settingId, data)
+    const result = await endpoint.patch('/settings/'+settingId, data)
 
     return result.data
   } catch(e) {

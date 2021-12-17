@@ -1,17 +1,13 @@
 import { useState, useEffect } from "react";
+import {TaskAll} from "../api/Tasks";
 
 export default function useFetchTasks() {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    const loadTasks = async () => {
-      const response = await fetch("http://localhost:3010/tasks");
-      const responseJson = await response.json();
-
-      setTasks(responseJson);
-    };
-
-    loadTasks();
+    (async () => {
+      setTasks(await TaskAll());
+    })()
   }, []);
 
   return [tasks, setTasks];
