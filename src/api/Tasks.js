@@ -1,6 +1,17 @@
 import axios from "axios";
 import {ListFind} from "./Lists";
 
+export const TaskAll = async () => {
+  try {
+    const result = await axios.get(process.env.REACT_APP_BACKEND_ENDPOINT + '/tasks')
+
+    return result.data;
+  } catch(e) {
+    throw new Error(e);
+  }
+}
+
+
 export const TaskCreate = async (body, listId) => {
   const data = {
     body: body,

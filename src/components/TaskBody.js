@@ -98,7 +98,7 @@ export default function TaskBody({value, isEditable, setEditable, onUpdate, onCo
       contentEditable={isEditable}
       suppressContentEditableWarning={true}
       onPaste={handlePaste}
-      className="TaskBody rounded font-bold outline-none break-all cursor-text"
+      className={`TaskBody rounded font-bold outline-none break-all ${isEditable ? 'cursor-text' : ''}`}
       onClick={() => setEditable(true)}
       onKeyDown={handleKeyDown}
     >{value}</p>

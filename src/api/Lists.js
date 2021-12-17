@@ -1,5 +1,7 @@
 import axios from "axios";
 import {GetSetting, SetSetting} from "./Settings";
+import List from "../components/List";
+import {TaskDelete} from "./Tasks";
 
 export const ListCreate = async (name) => {
   try {
@@ -30,6 +32,34 @@ export const ListFind = async (listId) => {
 }
 
 /**
+ * Deletes all tasks from list, the list itself, and deletes the list from the list order.
+ *
+ * @param {number} listId
+ * @returns {Promise<any>}
+ * @constructor
+ */
+export const ListDelete = async (listId) => {
+  try {
+    const list = await ListFind(listId)
+
+    // delete all tasks that belong to this list
+    list.tasks.forEach( (task) => {
+      // delete each task
+      TaskDelete(task, list.id)
+    })
+
+    // delete the list from list order
+    await DeleteFromListOrder(listId)
+
+    // delete list itself
+    const result = await axios.delete(process.env.REACT_APP_BACKEND_ENDPOINT + '/lists/' + listId)
+    return result.data
+  } catch(e) {
+    throw new Error(e)
+  }
+}
+
+/**
  * Add new list to list order.
  *
  * @param {number} listId
@@ -48,6 +78,31 @@ export const AddToListOrder = async (listId) => {
     orderListSetting.value.forEach(task => newOrder.add(task))
 
     const result = await SetSetting(orderListSetting.id, Array.from(newOrder))
+
+    return result.value;
+  } catch(e) {
+    throw new Error(e);
+  }
+}
+
+/**
+ * Delete from list order.
+ *
+ * @param {number} listId
+ * @returns {Promise<*>}
+ * @constructor
+ */
+export const DeleteFromListOrder = async (listId) => {
+  try {
+    const listOrderSetting = await GetSetting("listOrder")
+    const newOrder = new Set()
+    const listOrder = Array.from(listOrderSetting.value);
+
+    const listIndex = listOrder.indexOf(listId)
+
+    listOrder.splice(listIndex, 1)
+
+    const result = await SetSetting(listOrderSetting.id, listOrder)
 
     return result.value;
   } catch(e) {

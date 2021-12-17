@@ -5,10 +5,9 @@ import useFetchTags from "../hooks/useFetchTags";
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
 import useFetchListOrder from "../hooks/useFetchListOrder";
 import {getId, getIdAsNumber} from "../utilities";
-import {TaskCreate, TaskDelete} from "../api/Tasks";
-import {ListCreate, SaveListOrder, SaveTasksToList} from "../api/Lists";
+import {TaskAll, TaskCreate, TaskDelete} from "../api/Tasks";
+import {ListCreate, ListDelete, SaveListOrder, SaveTasksToList} from "../api/Lists";
 import Button from "../components/Button";
-import Log from "tailwindcss/lib/util/log";
 
 export default function Home() {
   const [listOrder, setListOrder, isReady] = useFetchListOrder();
@@ -82,6 +81,7 @@ export default function Home() {
           handleNewTask={handleNewTask}
           handleTaskDelete={handleTaskDelete}
           onTaskUpdate={handleTaskUpdate}
+          onListDelete={handleListDelete}
         />
       )
     })
@@ -106,6 +106,30 @@ export default function Home() {
 
     console.log(newListOrder)
     setListOrder(newListOrder);
+  }
+
+  /**
+   * Handler for list deletion
+   * @param {number} listId
+   * @returns {Promise<void>}
+   */
+  const handleListDelete = async (listId) => {
+    await ListDelete(listId);
+
+    setLists(lists => {
+      return lists.filter(list => {
+        return list.id !== listId
+      })
+    })
+
+    setListOrder(listIds => {
+      return listIds.filter(id => id !== listId)
+    })
+
+    const newTasks = await TaskAll()
+    console.log(newTasks)
+    setTasks(newTasks)
+
   }
 
   const onBoarding = () => {
