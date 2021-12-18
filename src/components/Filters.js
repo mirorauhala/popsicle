@@ -2,14 +2,20 @@ import Button from "./Button";
 
 export default function Filters(props) {
 
-    const {onNewList, tags, currentFilter, onFilterChange} = props
+    const {onNewList, tags, currentFilter, onFilterChange, search, onSearch} = props
 
     const handleFilterChange = (e) => onFilterChange(Number(e.target.value))
 
     return (
         <div className="flex gap-2 items-center px-4 pb-4">
             <Button onClick={onNewList}>New list</Button>
-            <input type="search" className="px-4 py-2 rounded-lg border" placeholder="Search tasks..." />
+            <input
+                type="text"
+                className="px-4 py-2 rounded-lg border"
+                placeholder="Search tasks..."
+                defaultValue={search}
+                onInput={onSearch}
+            />
 
             <div className="ml-auto flex gap-2 items-center">
                 <label className="sr-only font-medium">Filter by</label>

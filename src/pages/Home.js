@@ -11,6 +11,7 @@ import Button from "../components/Button";
 import Filters from "../components/Filters";
 import useFetchFilter from "../hooks/useFetchFilter";
 import {GetSetting, SetSetting} from "../api/Settings";
+import useFetchSearch from "../hooks/useFetchSearch";
 
 export default function Home() {
   const [listOrder, setListOrder, isReady] = useFetchListOrder();
@@ -18,6 +19,7 @@ export default function Home() {
   const [tasks, setTasks] = useFetchTasks();
   const [tags, setTags] = useFetchTags();
   const [filter, setFilter] = useFetchFilter()
+  const [search, setSearch] = useFetchSearch()
 
   /**
    * Handle new task.
@@ -111,6 +113,16 @@ export default function Home() {
     })
   }
 
+  const filterTasksBySearch = (filterTasks) => {
+    if(search === "") {
+      return filterTasks;
+    }
+
+    return filterTasks.filter(task => {
+      return task.body.startsWith(search)
+    })
+  }
+
   /**
    * Handle filter change.
    * @param filterId
@@ -121,8 +133,22 @@ export default function Home() {
     setFilter(filterId)
 
     // set the setting
-    const filterSettingId = await GetSetting('filter') // dumb but needed
-    await SetSetting(filterSettingId.id, filterId)
+    const filterSetting = await GetSetting('filter') // dumb but needed
+    await SetSetting(filterSetting.id, filterId)
+  }
+
+  /**
+   * Filter task by search query.
+   * @param event
+   * @returns {Promise<void>}
+   */
+  const handleSearch = async (event) => {
+    const query = event.target.value
+    console.log(query)
+    setSearch(query)
+
+    const searchSetting = await GetSetting('search') // dumb but needed
+    await SetSetting(searchSetting.id, query)
   }
 
   /**
@@ -141,13 +167,14 @@ export default function Home() {
       }) : []
 
 
-      const filteredTasks = filterTasksByTagId(tasksForList, filter)
+      const filterByTags = filterTasksByTagId(tasksForList, filter)
+      const filterBySearch = filterTasksBySearch(filterByTags)
 
       return (
         <List
           key={getId('list', list.id)}
           index={index}
-          tasks={filteredTasks}
+          tasks={filterBySearch}
           list={list}
           tags={tags}
           handleNewTask={handleNewTask}
@@ -333,6 +360,8 @@ export default function Home() {
       <Filters
         onNewList={handleNewList}
         onFilterChange={handleFilterChange}
+        onSearch={handleSearch}
+        search={search}
         currentFilter={filter}
         tags={tags}
       />

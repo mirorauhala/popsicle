@@ -9,6 +9,11 @@
       "id": 2,
       "key": "filter",
       "value": 0
+    },
+    {
+      "id": 3,
+      "key": "search",
+      "value": ""
     }
   ],
   "lists": [],
