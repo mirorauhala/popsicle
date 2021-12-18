@@ -11,6 +11,16 @@ export const TaskAll = async () => {
   }
 }
 
+export const TaskSearch = async (query) => {
+  try {
+    const result = await endpoint.get( '/tasks?q='+query)
+
+    return result.data;
+  } catch(e) {
+    throw new Error(e);
+  }
+}
+
 
 export const TaskCreate = async ({body, tags, done, listId}) => {
   const data = {

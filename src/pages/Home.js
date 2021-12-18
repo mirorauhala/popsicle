@@ -1,11 +1,10 @@
 import List from "../components/List";
-import useFetchTasks from "../hooks/useFetchTasks";
 import useFetchLists from "../hooks/useFetchLists";
 import useFetchTags from "../hooks/useFetchTags";
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
 import useFetchListOrder from "../hooks/useFetchListOrder";
 import {getId, getIdAsNumber} from "../utilities";
-import {TaskCreate, TaskDelete} from "../api/Tasks";
+import {TaskCreate, TaskDelete, TaskSearch} from "../api/Tasks";
 import {ListCreate, ListDelete, SaveListOrder, SaveTasksToList} from "../api/Lists";
 import Button from "../components/Button";
 import Filters from "../components/Filters";
@@ -13,15 +12,23 @@ import useFetchFilter from "../hooks/useFetchFilter";
 import {GetSetting, SetSetting} from "../api/Settings";
 import useFetchSearch from "../hooks/useFetchSearch";
 import useFetchSort from "../hooks/useFetchSort";
+import {useEffect, useState} from "react";
 
 export default function Home() {
   const [listOrder, setListOrder, isReady] = useFetchListOrder();
   const [lists, setLists] = useFetchLists();
-  const [tasks, setTasks] = useFetchTasks();
+  const [tasks, setTasks] = useState([]);
   const [tags, setTags] = useFetchTags();
   const [filter, setFilter] = useFetchFilter()
   const [search, setSearch] = useFetchSearch()
   const [sort, setSort] = useFetchSort()
+
+  useEffect(() => {
+      (async () => {
+        const results = await TaskSearch(search);
+        setTasks(results)
+      })();
+  }, [search])
 
   /**
    * Handle new task.
@@ -115,16 +122,6 @@ export default function Home() {
     })
   }
 
-  const filterTasksBySearch = (filterTasks) => {
-    if(search === "") {
-      return filterTasks;
-    }
-
-    return filterTasks.filter(task => {
-      return task.body.startsWith(search)
-    })
-  }
-
   /**
    * Sort tasks based on their edit times.
    *
@@ -154,13 +151,15 @@ export default function Home() {
       }
 
       // if descending
-      console.log("descending")
       if (firstDate < secondDate) {
         return 1;
       }
       if (firstDate > secondDate) {
         return -1;
       }
+
+      // sort expects a return
+      return 0;
 
     })
   }
@@ -195,7 +194,6 @@ export default function Home() {
    */
   const handleSearch = async (event) => {
     const query = event.target.value
-    console.log(query)
     setSearch(query)
 
     const searchSetting = await GetSetting('search') // dumb but needed
@@ -214,13 +212,14 @@ export default function Home() {
       })
 
       const tasksForList = tasks.length > 0 ? list.tasks.map(taskId => {
-        return tasks.find(task => getId('task', task.id) === getId('task', taskId))
+        return tasks.find(task => task.id === taskId)
       }) : []
 
+      // remove all undefined tasks
+      const cleanTaskList = tasksForList.filter((taskId) => taskId !== undefined)
 
-      const filterByTags = filterTasksByTagId(tasksForList, filter)
-      const filterBySearch = filterTasksBySearch(filterByTags)
-      const sortedTasks = sortTasks(filterBySearch)
+      const filterByTags = filterTasksByTagId(cleanTaskList, filter)
+      const sortedTasks = sortTasks(filterByTags)
 
       return (
         <List
@@ -398,8 +397,6 @@ export default function Home() {
 
       return list
     })
-
-
 
     setLists(newList);
   }
