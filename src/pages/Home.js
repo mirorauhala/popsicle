@@ -26,7 +26,11 @@ export default function Home() {
    * @returns {Promise<void>}
    */
   const handleNewTask = async (listId, body) => {
-    const [newTask, newList] = await TaskCreate(body, listId)
+    const [newTask, newList] = await TaskCreate({
+      listId,
+      body,
+      tags: (filter !== 0 ? [filter] : [])
+    })
 
     setTasks([newTask, ...tasks])
     setLists((lists) => {

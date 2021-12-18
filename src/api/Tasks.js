@@ -12,11 +12,11 @@ export const TaskAll = async () => {
 }
 
 
-export const TaskCreate = async (body, listId) => {
+export const TaskCreate = async ({body, tags, done, listId}) => {
   const data = {
     body: body,
     updated_at: new Date().toISOString(),
-    tags: [],
+    tags: tags || [],
     done: false
   }
 
