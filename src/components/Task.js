@@ -7,7 +7,7 @@ import {TaskEdit} from "../api/Tasks";
 import Spinner from "./Spinner";
 import {TagCreate} from "../api/Tags";
 
-export default function Task({task, list, index, tags, handleTaskDelete, onTaskUpdate, onTagCreate}) {
+export default function Task({task, list, index, tags, handleTaskDelete, onTaskUpdate, onTagCreate, isDragDisabled}) {
   const menuRef = useRef(null)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -108,7 +108,11 @@ export default function Task({task, list, index, tags, handleTaskDelete, onTaskU
   });
 
   return (
-    <Draggable draggableId={getId('task', task.id)} index={index}>
+    <Draggable
+        draggableId={getId('task', task.id)}
+        index={index}
+        isDragDisabled={isDragDisabled}
+    >
       {(provided, snapshot) => (
 
         <div

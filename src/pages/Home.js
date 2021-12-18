@@ -8,13 +8,23 @@ import {getId, getIdAsNumber} from "../utilities";
 import {TaskCreate, TaskDelete} from "../api/Tasks";
 import {ListCreate, ListDelete, SaveListOrder, SaveTasksToList} from "../api/Lists";
 import Button from "../components/Button";
+import Filters from "../components/Filters";
+import useFetchFilter from "../hooks/useFetchFilter";
+import {GetSetting, SetSetting} from "../api/Settings";
 
 export default function Home() {
   const [listOrder, setListOrder, isReady] = useFetchListOrder();
   const [lists, setLists] = useFetchLists();
   const [tasks, setTasks] = useFetchTasks();
   const [tags, setTags] = useFetchTags();
+  const [filter, setFilter] = useFetchFilter()
 
+  /**
+   * Handle new task.
+   * @param listId
+   * @param body
+   * @returns {Promise<void>}
+   */
   const handleNewTask = async (listId, body) => {
     const [newTask, newList] = await TaskCreate(body, listId)
 
@@ -31,6 +41,12 @@ export default function Home() {
     })
   }
 
+  /**
+   * Handle task deletion.
+   * @param taskId
+   * @param listId
+   * @returns {Promise<void>}
+   */
   const handleTaskDelete = async (taskId, listId) => {
     const newList = await TaskDelete(taskId, listId)
 
@@ -45,6 +61,11 @@ export default function Home() {
     })
   }
 
+  /**
+   * Handle task update to state.
+   * @param newTask
+   * @returns {Promise<void>}
+   */
   const handleTaskUpdate = async (newTask) => {
     setTasks(tasks => {
       return tasks.map(task => {
@@ -57,6 +78,10 @@ export default function Home() {
     })
   }
 
+  /**
+   * Handle saving new tag to state.
+   * @param newTag
+   */
   const handleTagCreate = (newTag) => {
     setTags([...tags, newTag])
   }
@@ -65,6 +90,42 @@ export default function Home() {
     return listOrder?.length > 0 && lists?.length > 0
   }
 
+  /**
+   * Filter tasks by tag id
+   * @param filterTasks
+   * @param filterId
+   * @returns {*}
+   */
+  const filterTasksByTagId = (filterTasks, filterId) => {
+
+    if(filterId === 0) {
+      return filterTasks
+    }
+
+    return filterTasks.filter(task => {
+      return task.tags.includes(filterId)
+    })
+  }
+
+  /**
+   * Handle filter change.
+   * @param filterId
+   * @returns {Promise<void>}
+   */
+  const handleFilterChange = async (filterId) => {
+    // set state
+    setFilter(filterId)
+
+    // set the setting
+    const filterSettingId = await GetSetting('filter') // dumb but needed
+    await SetSetting(filterSettingId.id, filterId)
+  }
+
+  /**
+   * Render the lists.
+   *
+   * @returns {*}
+   */
   const renderLists = () => {
     return listOrder.map((listId, index) => {
       const list = lists.find(list => {
@@ -75,11 +136,14 @@ export default function Home() {
         return tasks.find(task => getId('task', task.id) === getId('task', taskId))
       }) : []
 
+
+      const filteredTasks = filterTasksByTagId(tasksForList, filter)
+
       return (
         <List
           key={getId('list', list.id)}
           index={index}
-          tasks={tasksForList}
+          tasks={filteredTasks}
           list={list}
           tags={tags}
           handleNewTask={handleNewTask}
@@ -87,12 +151,17 @@ export default function Home() {
           onTaskUpdate={handleTaskUpdate}
           onListDelete={handleListDelete}
           onTagCreate={handleTagCreate}
+          isDragDisabled={filter !== 0}
         />
       )
     })
   }
 
-  const addList = async () => {
+  /**
+   * Handler for new list creation.
+   * @returns {Promise<void>}
+   */
+  const handleNewList = async () => {
     // eslint-disable-next-line no-restricted-globals
     const name = prompt('List name:') || ""
 
@@ -144,11 +213,16 @@ export default function Home() {
     await ListDelete(listId);
   }
 
+  /**
+   * Message shown to user when application starts from an empty state.
+   *
+   * @returns {JSX.Element|null}
+   */
   const onBoarding = () => {
     return isReady ? (
       <div className="flex flex-col gap-5 justify-center items-center w-full h-full pb-32">
         <h1 className="text-2xl font-medium text-indigo-900">Start by adding a new list</h1>
-        <Button onClick={addList}>Create a new list</Button>
+        <Button onClick={handleNewList}>Create a new list</Button>
       </div>
     ) : null
   }
@@ -252,24 +326,12 @@ export default function Home() {
       onDragEnd={onDragEnd}
     >
 
-      <div className="flex gap-2 items-center px-4 pb-4">
-        <Button onClick={addList}>New list</Button>
-        <input type="search" className="px-4 py-2 rounded-lg border" placeholder="Search tasks..." />
-
-        <div className="ml-auto flex gap-2 items-center">
-          <label className="sr-only font-medium">Filter by</label>
-          <select className="border rounded-lg px-3 py-2">
-            <option>Filter by (none)</option>
-            <option>Lol</option>
-          </select>
-
-          <label className="sr-only font-medium">Sort by</label>
-          <select className="border rounded-lg px-3 py-2">
-            <option>Sort by (none)</option>
-            <option>Lol</option>
-          </select>
-        </div>
-      </div>
+      <Filters
+        onNewList={handleNewList}
+        onFilterChange={handleFilterChange}
+        currentFilter={filter}
+        tags={tags}
+      />
 
       <Droppable droppableId="all-columns" direction="horizontal" type="column">
         {(provided) => (
