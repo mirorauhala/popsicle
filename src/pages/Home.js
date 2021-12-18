@@ -12,6 +12,7 @@ import Filters from "../components/Filters";
 import useFetchFilter from "../hooks/useFetchFilter";
 import {GetSetting, SetSetting} from "../api/Settings";
 import useFetchSearch from "../hooks/useFetchSearch";
+import useFetchSort from "../hooks/useFetchSort";
 
 export default function Home() {
   const [listOrder, setListOrder, isReady] = useFetchListOrder();
@@ -20,6 +21,7 @@ export default function Home() {
   const [tags, setTags] = useFetchTags();
   const [filter, setFilter] = useFetchFilter()
   const [search, setSearch] = useFetchSearch()
+  const [sort, setSort] = useFetchSort()
 
   /**
    * Handle new task.
@@ -124,6 +126,46 @@ export default function Home() {
   }
 
   /**
+   * Sort tasks based on their edit times.
+   *
+   * @param tasks
+   * @returns {*}
+   */
+  const sortTasks = (tasks) => {
+    // no sorting applied
+    if(sort === 0) {
+      return tasks
+    }
+
+    return tasks.sort((first, second) => {
+
+      const firstDate = new Date(first.updated_at).getTime()
+      const secondDate = new Date(second.updated_at).getTime()
+
+      // if ascending
+      if(sort === 1) {
+
+        if (firstDate < secondDate) {
+          return -1;
+        }
+        if (firstDate > secondDate) {
+          return 1;
+        }
+      }
+
+      // if descending
+      console.log("descending")
+      if (firstDate < secondDate) {
+        return 1;
+      }
+      if (firstDate > secondDate) {
+        return -1;
+      }
+
+    })
+  }
+
+  /**
    * Handle filter change.
    * @param filterId
    * @returns {Promise<void>}
@@ -135,6 +177,15 @@ export default function Home() {
     // set the setting
     const filterSetting = await GetSetting('filter') // dumb but needed
     await SetSetting(filterSetting.id, filterId)
+  }
+
+  const handleSortChange = async (sort) => {
+    // set sort state
+    setSort(sort)
+
+    // set the setting
+    const sortSetting = await GetSetting('sort') // dumb but needed
+    await SetSetting(sortSetting.id, sort)
   }
 
   /**
@@ -169,12 +220,13 @@ export default function Home() {
 
       const filterByTags = filterTasksByTagId(tasksForList, filter)
       const filterBySearch = filterTasksBySearch(filterByTags)
+      const sortedTasks = sortTasks(filterBySearch)
 
       return (
         <List
           key={getId('list', list.id)}
           index={index}
-          tasks={filterBySearch}
+          tasks={sortedTasks}
           list={list}
           tags={tags}
           handleNewTask={handleNewTask}
@@ -182,7 +234,7 @@ export default function Home() {
           onTaskUpdate={handleTaskUpdate}
           onListDelete={handleListDelete}
           onTagCreate={handleTagCreate}
-          isDragDisabled={filter !== 0}
+          isDragDisabled={filter !== 0 || sort !== 0}
         />
       )
     })
@@ -360,8 +412,10 @@ export default function Home() {
       <Filters
         onNewList={handleNewList}
         onFilterChange={handleFilterChange}
+        onSortChange={handleSortChange}
         onSearch={handleSearch}
         search={search}
+        sort={sort}
         currentFilter={filter}
         tags={tags}
       />

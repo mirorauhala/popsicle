@@ -2,9 +2,10 @@ import Button from "./Button";
 
 export default function Filters(props) {
 
-    const {onNewList, tags, currentFilter, onFilterChange, search, onSearch} = props
+    const {onNewList, tags, currentFilter, onFilterChange, onSortChange, sort, search, onSearch} = props
 
     const handleFilterChange = (e) => onFilterChange(Number(e.target.value))
+    const handleSortChange = (e) => onSortChange(Number(e.target.value))
 
     return (
         <div className="flex gap-2 items-center px-4 pb-4">
@@ -29,9 +30,14 @@ export default function Filters(props) {
                 </select>
 
                 <label className="sr-only font-medium">Sort by</label>
-                <select className="border rounded-lg px-3 py-2">
-                    <option>Sort by (none)</option>
-                    <option>Lol</option>
+                <select
+                    className="border rounded-lg px-3 py-2"
+                    onChange={handleSortChange}
+                    value={sort}
+                >
+                    <option value={0}>Sort by (none)</option>
+                    <option value={1}>Last edited (asc)</option>
+                    <option value={2}>Last edited (desc)</option>
                 </select>
             </div>
         </div>
