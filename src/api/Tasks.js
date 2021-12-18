@@ -16,7 +16,8 @@ export const TaskCreate = async (body, listId) => {
   const data = {
     body: body,
     updated_at: new Date().toISOString(),
-    tags: []
+    tags: [],
+    done: false
   }
 
   try {
@@ -84,10 +85,11 @@ export const DeleteTaskFromList = async (taskId, listId) => {
   }
 }
 
-export const TaskEdit = async ({taskId, body, tags}) => {
+export const TaskEdit = async ({taskId, body, tags, done}) => {
   const data = {
     body,
     tags,
+    done,
     updated_at: new Date().toISOString(),
   }
 

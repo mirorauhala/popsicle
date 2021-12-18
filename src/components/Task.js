@@ -69,6 +69,13 @@ export default function Task({task, list, index, tags, handleTaskDelete, onTaskU
   }
 
   /**
+   * Handle task done checkbox.
+   */
+  const handleTaskDone = async () => {
+    handleTaskUpdate({done: !task.done})
+  }
+
+  /**
    * Unified handler for updating tasks.
    * @param data
    * @returns {Promise<void>}
@@ -123,7 +130,13 @@ export default function Task({task, list, index, tags, handleTaskDelete, onTaskU
             ${isLoading ? 'bg-white/70 shadow' : 'bg-white shadow hover:shadow-lg hover:shadow-indigo-800/20'}`}
         >
           <div className="flex shrink-0 items-center flex-col w-6">
-            <input type="checkbox" className="mt-1 w-4 mb-3 h-4" />
+            <input
+                type="checkbox"
+                disabled={isLoading}
+                className="mt-1 w-4 mb-3 h-4"
+                defaultChecked={task.done}
+                onChange={handleTaskDone}
+            />
             {isLoading ? <Spinner /> : null}
           </div>
 
