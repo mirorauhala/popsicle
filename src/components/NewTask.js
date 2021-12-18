@@ -8,9 +8,6 @@ export default function NewTask({list, handleNewTask}) {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    console.log()
-    console.log()
-
     handleNewTask(boardRef.current.value, taskRef.current.value)
 
     taskRef.current.value = ''

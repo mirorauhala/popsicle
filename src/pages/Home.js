@@ -109,7 +109,6 @@ export default function Home() {
       ]
     });
 
-    console.log(newListOrder)
     setListOrder(newListOrder);
   }
 
