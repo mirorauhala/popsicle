@@ -9,3 +9,14 @@ export const TagAll = async () => {
     throw new Error(e);
   }
 }
+
+export const TagCreate = async (name) => {
+  try {
+    const data = { name }
+    const result = await endpoint.post( '/tags', data)
+
+    return result.data;
+  } catch(e) {
+    throw new Error(e);
+  }
+}

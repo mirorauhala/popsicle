@@ -84,11 +84,11 @@ export const DeleteTaskFromList = async (taskId, listId) => {
   }
 }
 
-export const TaskEdit = async (taskId, body) => {
+export const TaskEdit = async ({taskId, body, tags}) => {
   const data = {
-    body: body,
+    body,
+    tags,
     updated_at: new Date().toISOString(),
-    tags: []
   }
 
   try {

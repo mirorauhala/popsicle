@@ -5,7 +5,7 @@ import useFetchTags from "../hooks/useFetchTags";
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
 import useFetchListOrder from "../hooks/useFetchListOrder";
 import {getId, getIdAsNumber} from "../utilities";
-import {TaskAll, TaskCreate, TaskDelete} from "../api/Tasks";
+import {TaskCreate, TaskDelete} from "../api/Tasks";
 import {ListCreate, ListDelete, SaveListOrder, SaveTasksToList} from "../api/Lists";
 import Button from "../components/Button";
 
@@ -57,6 +57,10 @@ export default function Home() {
     })
   }
 
+  const handleTagCreate = (newTag) => {
+    setTags([...tags, newTag])
+  }
+
   const isBoardEmpty = () => {
     return listOrder?.length > 0 && lists?.length > 0
   }
@@ -82,6 +86,7 @@ export default function Home() {
           handleTaskDelete={handleTaskDelete}
           onTaskUpdate={handleTaskUpdate}
           onListDelete={handleListDelete}
+          onTagCreate={handleTagCreate}
         />
       )
     })

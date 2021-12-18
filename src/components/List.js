@@ -13,6 +13,7 @@ export default function List({
   handleTaskDelete,
   onTaskUpdate,
   onListDelete,
+  onTagCreate
 }) {
   return (
     <Draggable draggableId={getId("list", list.id)} index={index}>
@@ -54,6 +55,7 @@ export default function List({
                         tags={tags}
                         handleTaskDelete={handleTaskDelete}
                         onTaskUpdate={onTaskUpdate}
+                        onTagCreate={onTagCreate}
                       />
                     );
                   })}

@@ -5,14 +5,44 @@ import {useEffect, useRef, useState} from "react";
 import TaskBody from "./TaskBody";
 import {TaskEdit} from "../api/Tasks";
 import Spinner from "./Spinner";
+import {TagCreate} from "../api/Tags";
 
-export default function Task({task, list, index, tags, handleTaskDelete, onTaskUpdate}) {
+export default function Task({task, list, index, tags, handleTaskDelete, onTaskUpdate, onTagCreate}) {
   const menuRef = useRef(null)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isEditable, setIsEditable] = useState(false)
 
-  const filterTags = () => {
+  /**
+   * Handle selecting tags.
+   * @param newTags
+   * @returns {Promise<void>}
+   */
+  const handleTagSelect = async (newTags) => {
+    await handleTaskUpdate({
+      tags: newTags
+    })
+  };
+
+  /**
+   * Create a new tag.
+   *
+   * @param tag
+   * @returns {Promise<void>}
+   */
+  const handleTagCreate = async (tag) => {
+    const newTag = await TagCreate(tag.label)
+
+    // save to state
+    onTagCreate(newTag)
+
+    return newTag
+  }
+
+  /**
+   * Get the selected tags for this task.
+   */
+  const selectedTags = () => {
     if (tags.length === 0) {
       return [];
     }
@@ -33,9 +63,23 @@ export default function Task({task, list, index, tags, handleTaskDelete, onTaskU
    * @returns {Promise<void>}
    */
   const handleTaskCommit = async (body) => {
+    await handleTaskUpdate({
+      body
+    })
+  }
+
+  /**
+   * Unified handler for updating tasks.
+   * @param data
+   * @returns {Promise<void>}
+   */
+  const handleTaskUpdate = async ({...data}) => {
     setIsEditable(false)
     setIsLoading(true)
-    const newTask = await TaskEdit(task.id, body)
+    const newTask = await TaskEdit({
+      taskId:task.id,
+      ...data
+    })
 
     // at minimum 500ms loading animation
     setTimeout(() => {
@@ -79,19 +123,27 @@ export default function Task({task, list, index, tags, handleTaskDelete, onTaskU
             {isLoading ? <Spinner /> : null}
           </div>
 
-          <div className="flex shrink basis-full flex-col">
+          <div className="flex shrink grow-0 basis-full flex-col">
             <TaskBody
               value={task.body}
               isEditable={isEditable}
               setEditable={(value) => setIsEditable(value)}
               onCommit={handleTaskCommit}
             />
-            <Tags tags={filterTags()} />
+
+            <Tags
+              onTagCreate={handleTagCreate}
+              selectedTags={selectedTags()}
+              onSelectedTags={handleTagSelect}
+              isLoading={isLoading}
+              tags={tags}
+            />
           </div>
 
           <button
-            className="opacity-0 group-hover:opacity-100 transition ease-in-out delay-100 w-6 h-6 rounded bg-indigo-100"
-            onClick={() => setIsMenuOpen(true)}>
+            className="opacity-0 focus:opacity-100 group-hover:opacity-100 transition ease-in-out delay-100 w-6 h-6 rounded bg-indigo-100"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
             <span className="sr-only">Open actions</span>
             <div className="flex gap-[2px] p-1 justify-center">
               <div className="w-1 h-1 bg-slate-500 rounded-full"></div>
