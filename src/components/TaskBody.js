@@ -71,7 +71,7 @@ export default function TaskBody({
       }
 
       // don't continue if the body is empty
-      if (output == "") {
+      if (output === "") {
         taskRef.current.innerHTML = value;
         return;
       }
