@@ -154,6 +154,7 @@ export default function Home() {
       if (firstDate < secondDate) {
         return 1;
       }
+
       if (firstDate > secondDate) {
         return -1;
       }
@@ -233,7 +234,7 @@ export default function Home() {
           onTaskUpdate={handleTaskUpdate}
           onListDelete={handleListDelete}
           onTagCreate={handleTagCreate}
-          isDragDisabled={filter !== 0 || sort !== 0}
+          isDragDisabled={filter !== 0 || sort !== 0 || search.length > 0}
         />
       )
     })
