@@ -115,7 +115,6 @@ export default function Task({
 
     setError("");
     setIsModalOpen(false);
-    console.log(datetime);
 
     handleTaskUpdate({ alert: new Date(datetime).toISOString() });
   };
