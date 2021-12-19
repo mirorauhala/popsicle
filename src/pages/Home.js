@@ -4,7 +4,7 @@ import useFetchTags from "../hooks/useFetchTags";
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
 import useFetchListOrder from "../hooks/useFetchListOrder";
 import {getId, getIdAsNumber} from "../utilities";
-import {TaskCreate, TaskDelete, TaskSearch} from "../api/Tasks";
+import {TaskAll, TaskCreate, TaskDelete, TaskEdit, TaskSearch} from "../api/Tasks";
 import {ListCreate, ListDelete, SaveListOrder, SaveTasksToList} from "../api/Lists";
 import Button from "../components/Button";
 import Filters from "../components/Filters";
@@ -29,6 +29,43 @@ export default function Home() {
         setTasks(results)
       })();
   }, [search])
+
+  useEffect(() => {
+    const alertInterval = setInterval( async () => {
+      const alerts = await TaskAll()
+
+      alerts.forEach((task) => {
+
+        // don't show alarm for task that's already done
+        if(task.done) {
+          return false;
+        }
+
+        // no alert
+        if(task.alert === "") {
+          return;
+        }
+
+        // don't show alarm for task that isn't due yet
+        if(new Date(task.alert) > new Date()) {
+          return false;
+        }
+
+        // clear alert for this task in the database
+        TaskEdit({alert: "", taskId: task.id});
+
+        // show alert
+        new Notification("Popsicle", {
+          body: task.body,
+        });
+      });
+    }, 2500)
+
+    return () => {
+      clearInterval(alertInterval)
+    }
+
+  }, [])
 
   /**
    * Handle new task.
