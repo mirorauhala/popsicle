@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ListDelete } from "../api/Lists";
 
 export default function ListHeading({
@@ -9,6 +9,23 @@ export default function ListHeading({
 }) {
   const menuRef = useRef();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  /**
+   * Close the menu when clicking outside the menu.
+   * @param {PointerEvent} event
+   */
+  const handleClickOutside = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setIsMenuOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, []);
 
   return (
     <div className="group flex relative">
