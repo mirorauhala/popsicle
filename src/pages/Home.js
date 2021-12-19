@@ -23,6 +23,9 @@ export default function Home() {
   const [search, setSearch] = useFetchSearch()
   const [sort, setSort] = useFetchSort()
 
+  /**
+   * Fetch new results when searching.
+   */
   useEffect(() => {
       (async () => {
         const results = await TaskSearch(search);
@@ -30,6 +33,10 @@ export default function Home() {
       })();
   }, [search])
 
+
+  /**
+   * Display the notifications to the user when they are due.
+   */
   useEffect(() => {
     const alertInterval = setInterval( async () => {
       const alerts = await TaskAll()
