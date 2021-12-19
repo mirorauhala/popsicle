@@ -14,7 +14,13 @@ body,
 
 #board {
   @apply flex pb-1 px-4 items-start overflow-x-auto;
-  height: calc(100vh - 9.625em);
+  height: calc(100vh - 202px);
+}
+
+@media (min-width: 640px) {
+  #board {
+    height: calc(100vh - 154px)
+  }
 }
 
 code {

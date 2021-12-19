@@ -16,20 +16,24 @@ export default function Filters(props) {
   const handleSortChange = (e) => onSortChange(Number(e.target.value));
 
   return (
-    <div className="flex gap-2 items-center p-4">
-      <Button onClick={onNewList}>New list</Button>
-      <input
-        type="text"
-        className="px-4 py-2 rounded-lg border"
-        placeholder="Search tasks..."
-        defaultValue={search}
-        onInput={onSearch}
-      />
+    <div className="flex flex-wrap flex-col md:justify-between md:flex-row p-4 gap-2">
+      <div className="flex gap-2">
+        <Button className="shrink-0" onClick={onNewList}>
+          New list
+        </Button>
+        <input
+          type="text"
+          className="px-4 py-2 w-full rounded-lg border"
+          placeholder="Search tasks..."
+          defaultValue={search}
+          onInput={onSearch}
+        />
+      </div>
 
-      <div className="ml-auto flex gap-2 items-center">
+      <div className="flex gap-2">
         <label className="sr-only font-medium">Filter by</label>
         <select
-          className="border rounded-lg px-3 py-2"
+          className="w-1/2 border rounded-lg px-3 py-2"
           onChange={handleFilterChange}
           value={currentFilter}
         >
@@ -43,7 +47,7 @@ export default function Filters(props) {
 
         <label className="sr-only font-medium">Sort by</label>
         <select
-          className="border rounded-lg px-3 py-2"
+          className="w-1/2 border rounded-lg px-3 py-2"
           onChange={handleSortChange}
           value={sort}
         >
