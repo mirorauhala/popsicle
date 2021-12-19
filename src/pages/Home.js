@@ -15,10 +15,10 @@ import useFetchSort from "../hooks/useFetchSort";
 import {useEffect, useState} from "react";
 
 export default function Home() {
-  const [listOrder, setListOrder, isReady] = useFetchListOrder();
-  const [lists, setLists] = useFetchLists();
-  const [tasks, setTasks] = useState([]);
-  const [tags, setTags] = useFetchTags();
+  const [listOrder, setListOrder, isReady] = useFetchListOrder()
+  const [lists, setLists] = useFetchLists()
+  const [tasks, setTasks] = useState([])
+  const [tags, setTags] = useFetchTags()
   const [filter, setFilter] = useFetchFilter()
   const [search, setSearch] = useFetchSearch()
   const [sort, setSort] = useFetchSort()
