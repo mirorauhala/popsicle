@@ -1,19 +1,24 @@
-import './TaskBody.css'
+import "./TaskBody.css";
 import sanitizeHtml from "sanitize-html";
-import {useEffect, useRef, useState} from "react";
+import { useEffect, useRef } from "react";
 
-export default function TaskBody({value, isEditable, setEditable, onUpdate, onCommit}) {
-  const taskRef = useRef()
+export default function TaskBody({
+  value,
+  isEditable,
+  setEditable,
+  onUpdate,
+  onCommit,
+}) {
+  const taskRef = useRef();
 
   /**
    * Focus the contentEditable area when editable.
    */
   useEffect(() => {
-    if(isEditable) {
-      taskRef.current.focus()
+    if (isEditable) {
+      taskRef.current.focus();
     }
-  }, [isEditable])
-
+  }, [isEditable]);
 
   /**
    * Return the sanitized output of the contentEditable.
@@ -24,30 +29,30 @@ export default function TaskBody({value, isEditable, setEditable, onUpdate, onCo
 
     return sanitizeHtml(innerHTML, {
       allowedTags: [],
-      allowedAttributes: {}
-    }).replace(/\r\n|\n\r|\n|\r/g, '')
-  }
+      allowedAttributes: {},
+    }).replace(/\r\n|\n\r|\n|\r/g, "");
+  };
 
   const handleKeyDown = (e) => {
-    const output = getCleanOutput()
+    const output = getCleanOutput();
 
     // if the onUpdate function is provided, call it
-    if(onUpdate) {
-      onUpdate(output)
+    if (onUpdate) {
+      onUpdate(output);
     }
 
     // commit to current value
-    if(e.key === "Enter") {
-      setEditable(false)
-      onCommit(output)
+    if (e.key === "Enter") {
+      setEditable(false);
+      onCommit(output);
     }
 
     // allow user to reset the input by hitting the escape key
-    if(e.key === "Escape") {
-      setEditable(false)
-      taskRef.current.innerHTML = value
+    if (e.key === "Escape") {
+      setEditable(false);
+      taskRef.current.innerHTML = value;
     }
-  }
+  };
 
   /**
    * Disable editing when the user clicks outside of the task body.
@@ -56,15 +61,15 @@ export default function TaskBody({value, isEditable, setEditable, onUpdate, onCo
    */
   const handleClickOutside = (event) => {
     if (taskRef.current && !taskRef.current.contains(event.target)) {
-      setEditable(false)
-      const output = getCleanOutput()
+      setEditable(false);
+      const output = getCleanOutput();
 
       // don't continue if there are no changes
-      if(output === value) {
+      if (output === value) {
         return;
       }
 
-      onCommit(output)
+      onCommit(output);
     }
   };
 
@@ -72,12 +77,12 @@ export default function TaskBody({value, isEditable, setEditable, onUpdate, onCo
    * Attach event listeners for clicking elsewhere.
    */
   useEffect(() => {
-    if(isEditable) {
-      document.addEventListener('click', handleClickOutside, true);
+    if (isEditable) {
+      document.addEventListener("click", handleClickOutside, true);
     }
 
     return () => {
-      document.removeEventListener('click', handleClickOutside, true);
+      document.removeEventListener("click", handleClickOutside, true);
     };
   }, [isEditable]);
 
@@ -87,10 +92,10 @@ export default function TaskBody({value, isEditable, setEditable, onUpdate, onCo
    * @param {ClipboardEvent} e
    */
   const handlePaste = (e) => {
-    e.preventDefault()
-    const plainText = e.clipboardData.getData("text/plain")
-    document.execCommand('insertHTML', false, plainText)
-  }
+    e.preventDefault();
+    const plainText = e.clipboardData.getData("text/plain");
+    document.execCommand("insertHTML", false, plainText);
+  };
 
   return (
     <p
@@ -98,9 +103,13 @@ export default function TaskBody({value, isEditable, setEditable, onUpdate, onCo
       contentEditable={isEditable}
       suppressContentEditableWarning={true}
       onPaste={handlePaste}
-      className={`TaskBody rounded font-bold outline-none break-all ${isEditable ? 'cursor-text' : ''}`}
+      className={`TaskBody rounded font-bold outline-none break-all ${
+        isEditable ? "cursor-text" : ""
+      }`}
       onClick={() => setEditable(true)}
       onKeyDown={handleKeyDown}
-    >{value}</p>
-  )
+    >
+      {value}
+    </p>
+  );
 }

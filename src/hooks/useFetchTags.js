@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {TagAll} from "../api/Tags";
+import { TagAll } from "../api/Tags";
 
 export default function useFetchTags() {
   const [tags, setTags] = useState([]);
@@ -7,7 +7,7 @@ export default function useFetchTags() {
   useEffect(() => {
     (async () => {
       setTags(await TagAll());
-    })()
+    })();
   }, []);
 
   return [tags, setTags];

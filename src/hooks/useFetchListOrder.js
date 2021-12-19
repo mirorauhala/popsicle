@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {GetSetting} from "../api/Settings";
+import { GetSetting } from "../api/Settings";
 
 export default function useFetchListOrder() {
   const [listOrder, setListOrder] = useState([]);
@@ -7,11 +7,11 @@ export default function useFetchListOrder() {
 
   useEffect(() => {
     (async () => {
-      const listOrder = await GetSetting('listOrder')
+      const listOrder = await GetSetting("listOrder");
 
       setListOrder(listOrder.value);
-      setIsReady(true)
-    })()
+      setIsReady(true);
+    })();
   }, []);
 
   return [listOrder, setListOrder, isReady];

@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { ListDelete } from "../api/Lists";
 
 export default function ListHeading({
   name,
@@ -42,9 +41,9 @@ export default function ListHeading({
       >
         <span className="sr-only">Open list actions</span>
         <div className="flex gap-[2px] p-1 justify-center">
-          <div className="w-1 h-1 bg-slate-500 rounded-full"></div>
-          <div className="w-1 h-1 bg-slate-500 rounded-full"></div>
-          <div className="w-1 h-1 bg-slate-500 rounded-full"></div>
+          <div className="w-1 h-1 bg-slate-500 rounded-full" />
+          <div className="w-1 h-1 bg-slate-500 rounded-full" />
+          <div className="w-1 h-1 bg-slate-500 rounded-full" />
         </div>
       </button>
 

@@ -14,7 +14,7 @@ export default function List({
   onTaskUpdate,
   onListDelete,
   onTagCreate,
-  isDragDisabled
+  isDragDisabled,
 }) {
   return (
     <Draggable draggableId={getId("list", list.id)} index={index}>

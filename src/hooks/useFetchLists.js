@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {ListAll} from "../api/Lists";
+import { ListAll } from "../api/Lists";
 
 export default function useFetchLists() {
   const [lists, setLists] = useState([]);
@@ -7,7 +7,7 @@ export default function useFetchLists() {
   useEffect(() => {
     (async () => {
       setLists(await ListAll());
-    })()
+    })();
   }, []);
 
   return [lists, setLists];
