@@ -12,7 +12,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="m-4 px-4 bg-indigo-50 rounded-xl flex items-center h-16">
+    <nav className="mx-4 px-4 bg-indigo-50 rounded-xl flex items-center h-16">
       <NavLink
         className="font-logo text-2xl text-indigo-800 font-bold pr-4 uppercase"
         to="/"

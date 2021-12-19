@@ -250,51 +250,6 @@ export default function Home() {
   };
 
   /**
-   * Render the lists.
-   *
-   * @returns {*}
-   */
-  const renderLists = () => {
-    return listOrder.map((listId, index) => {
-      const list = lists.find((list) => {
-        return getId("list", list.id) === getId("list", listId);
-      });
-
-      const tasksForList =
-        tasks.length > 0
-          ? list.tasks.map((taskId) => {
-              return tasks.find((task) => task.id === taskId);
-            })
-          : [];
-
-      // remove all undefined tasks
-      const cleanTaskList = tasksForList.filter(
-        (taskId) => taskId !== undefined,
-      );
-
-      const filterByTags = filterTasksByTagId(cleanTaskList, filter);
-      const sortedTasks = sortTasks(filterByTags);
-
-      return (
-        <List
-          key={getId("list", list.id)}
-          index={index}
-          tasks={sortedTasks}
-          list={list}
-          tags={tags}
-          handleNewTask={handleNewTask}
-          handleTaskDelete={handleTaskDelete}
-          onTaskUpdate={handleTaskUpdate}
-          onListDelete={handleListDelete}
-          onListRename={handleListRename}
-          onTagCreate={handleTagCreate}
-          isDragDisabled={filter !== 0 || sort !== 0 || search.length > 0}
-        />
-      );
-    });
-  };
-
-  /**
    * Handler for new list creation.
    * @returns {Promise<void>}
    */
@@ -479,6 +434,51 @@ export default function Home() {
     });
 
     setLists(newList);
+  };
+
+  /**
+   * Render the lists.
+   *
+   * @returns {*}
+   */
+  const renderLists = () => {
+    return listOrder.map((listId, index) => {
+      const list = lists.find((list) => {
+        return getId("list", list.id) === getId("list", listId);
+      });
+
+      const tasksForList =
+        tasks.length > 0
+          ? list.tasks.map((taskId) => {
+              return tasks.find((task) => task.id === taskId);
+            })
+          : [];
+
+      // remove all undefined tasks
+      const cleanTaskList = tasksForList.filter(
+        (taskId) => taskId !== undefined,
+      );
+
+      const filterByTags = filterTasksByTagId(cleanTaskList, filter);
+      const sortedTasks = sortTasks(filterByTags);
+
+      return (
+        <List
+          key={getId("list", list.id)}
+          index={index}
+          tasks={sortedTasks}
+          list={list}
+          tags={tags}
+          handleNewTask={handleNewTask}
+          handleTaskDelete={handleTaskDelete}
+          onTaskUpdate={handleTaskUpdate}
+          onListDelete={handleListDelete}
+          onListRename={handleListRename}
+          onTagCreate={handleTagCreate}
+          isDragDisabled={filter !== 0 || sort !== 0 || search.length > 0}
+        />
+      );
+    });
   };
 
   return (

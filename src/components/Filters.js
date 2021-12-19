@@ -16,7 +16,7 @@ export default function Filters(props) {
   const handleSortChange = (e) => onSortChange(Number(e.target.value));
 
   return (
-    <div className="flex gap-2 items-center px-4 pb-4">
+    <div className="flex gap-2 items-center p-4">
       <Button onClick={onNewList}>New list</Button>
       <input
         type="text"

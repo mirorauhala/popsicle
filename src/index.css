@@ -8,14 +8,13 @@ body,
   min-height: 100vh;
 }
 
-html,
-body {
-  overflow: hidden;
+#root {
+  padding-top: 1rem;
 }
 
 #board {
-  height: calc(100vh - 6rem);
-  @apply flex pb-4 items-start px-4 mb-3 overflow-x-auto;
+  @apply flex pb-1 px-4 items-start overflow-x-auto;
+  height: calc(100vh - 9.625em);
 }
 
 code {
