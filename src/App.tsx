@@ -1,8 +1,8 @@
-import {Route, Routes } from 'react-router-dom'
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import About from './pages/About';
-import Settings from './pages/Settings';
+import { Route, Routes } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Info from "./pages/Info";
+import Settings from "./pages/Settings";
 
 function App() {
   return (
@@ -10,11 +10,10 @@ function App() {
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<Home />}/>
-        <Route path="/about" element={<About />}/>
-        <Route path="/settings" element={<Settings />}/>
+        <Route path="/" element={<Home />} />
+        <Route path="/info" element={<Info />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
-
     </>
   );
 }

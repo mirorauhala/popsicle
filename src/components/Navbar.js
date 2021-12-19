@@ -27,7 +27,7 @@ export default function Navbar() {
           </NavLink>
         </li>
         <li>
-          <NavLink className={linkStyle} to="/about">
+          <NavLink className={linkStyle} to="/info">
             Info
           </NavLink>
         </li>
