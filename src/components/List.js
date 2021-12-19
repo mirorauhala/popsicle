@@ -14,6 +14,7 @@ export default function List({
   onTaskUpdate,
   onListDelete,
   onTagCreate,
+  onListRename,
   isDragDisabled,
 }) {
   return (
@@ -29,6 +30,7 @@ export default function List({
             dragHandleProps={provided.dragHandleProps}
             listId={list.id}
             onDelete={onListDelete}
+            onListRename={onListRename}
           />
           <NewTask list={list} handleNewTask={handleNewTask} />
 

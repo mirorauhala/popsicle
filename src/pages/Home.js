@@ -14,6 +14,7 @@ import {
 import {
   ListCreate,
   ListDelete,
+  ListEdit,
   SaveListOrder,
   SaveTasksToList,
 } from "../api/Lists";
@@ -285,6 +286,7 @@ export default function Home() {
           handleTaskDelete={handleTaskDelete}
           onTaskUpdate={handleTaskUpdate}
           onListDelete={handleListDelete}
+          onListRename={handleListRename}
           onTagCreate={handleTagCreate}
           isDragDisabled={filter !== 0 || sort !== 0 || search.length > 0}
         />
@@ -342,6 +344,29 @@ export default function Home() {
 
     // delete the list from server
     await ListDelete(listId);
+  };
+
+  /**
+   * Handler for list deletion.
+   * @param {number} listId
+   * @returns {Promise<void>}
+   */
+  const handleListRename = async (listId, name) => {
+    setLists((lists) => {
+      return lists.map((list) => {
+        if (list.id === listId) {
+          return {
+            ...list,
+            name,
+          };
+        }
+
+        return list;
+      });
+    });
+
+    // update the list
+    ListEdit({ listId, name });
   };
 
   /**

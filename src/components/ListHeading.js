@@ -5,9 +5,22 @@ export default function ListHeading({
   listId,
   dragHandleProps,
   onDelete,
+  onListRename,
 }) {
   const menuRef = useRef();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  /**
+   * Handle list rename.
+   */
+  const handleListRename = () => {
+    const newName = prompt("Rename list", name);
+    setIsMenuOpen(false);
+
+    if (newName !== "") {
+      onListRename(listId, newName);
+    }
+  };
 
   /**
    * Close the menu when clicking outside the menu.
@@ -52,8 +65,11 @@ export default function ListHeading({
           ref={menuRef}
           className="flex flex-col border border-indigo-900/10 px-2 py-3 rounded-lg absolute bg-white w-28 top-[46px] right-0 z-50 shadow-xl shadow-indigo-800/20"
         >
-          <button className="py-2 px-3 rounded-lg font-medium text-left hover:bg-gray-100">
-            Edit
+          <button
+            className="py-2 px-3 rounded-lg font-medium text-left hover:bg-gray-100"
+            onClick={handleListRename}
+          >
+            Rename
           </button>
           <button
             className="py-2 px-3 rounded-lg font-medium text-left hover:bg-gray-100"

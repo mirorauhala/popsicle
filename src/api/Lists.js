@@ -68,6 +68,24 @@ export const ListDelete = async (listId) => {
 };
 
 /**
+ * Edit list.
+ *
+ * @param {number} listId
+ * @returns {Promise<any>}
+ * @constructor
+ */
+export const ListEdit = async ({ listId, name }) => {
+  try {
+    const data = { name };
+
+    const result = await endpoint.patch("/lists/" + listId, data);
+    return result.data;
+  } catch (e) {
+    throw new Error(e);
+  }
+};
+
+/**
  * Add new list to list order.
  *
  * @param {number} listId
