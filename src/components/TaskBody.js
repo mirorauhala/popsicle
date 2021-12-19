@@ -42,8 +42,9 @@ export default function TaskBody({
     }
 
     // commit to current value
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && output !== "") {
       setEditable(false);
+
       onCommit(output);
     }
 
@@ -55,7 +56,7 @@ export default function TaskBody({
   };
 
   /**
-   * Disable editing when the user clicks outside of the task body.
+   * Disable editing when the user clicks outside the task body.
    *
    * @param event
    */
@@ -66,6 +67,12 @@ export default function TaskBody({
 
       // don't continue if there are no changes
       if (output === value) {
+        return;
+      }
+
+      // don't continue if the body is empty
+      if (output == "") {
+        taskRef.current.innerHTML = value;
         return;
       }
 
