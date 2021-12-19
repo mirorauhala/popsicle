@@ -1,42 +1,38 @@
 import Button from "../components/Button";
+import { useEffect, useState } from "react";
 
 export default function Settings() {
-  const handleNotifications = (e) => {
+  const [permissions, setPermissions] = useState();
+
+  useEffect(() => {
+    setPermissions(Notification.permission);
+  }, []);
+
+  const handleNotificationPermission = (e) => {
     Notification.requestPermission().then(function (result) {
-      console.log(result);
+      setPermissions(result);
     });
   };
 
   const handleNotificationTest = (e) => {
-    const noti = new Notification("Remin", {
-      body: "testing",
+    new Notification("Popsicle", {
+      body: "Testing... 1..2..3..",
     });
-
-    noti.onclick = () => {
-      console.log("moi");
-    };
-
-    console.log(noti);
   };
 
   return (
     <div className="bg-white p-10 rounded-2xl w-full h-full">
-      <h1 className="font-bold text-4xl">Settings</h1>
+      <h1 className="font-bold text-5xl mb-10 text-indigo-900">Settings</h1>
 
-      <div className="py-3">
-        <label htmlFor="notifications" className="font-bold">
-          Enable notifications
-        </label>
-        <input
-          type="checkbox"
-          id="notifications"
-          className="mx-3"
-          checked={Notification.permission === "granted"}
-          onChange={handleNotifications}
-        />
-      </div>
-
-      <Button onClick={handleNotificationTest}>Send a test notification</Button>
+      {permissions === "granted" ? (
+        <Button onClick={handleNotificationTest}>
+          Send a test notification
+        </Button>
+      ) : (
+        <Button onClick={handleNotificationPermission}>
+          Grant notification permissions
+        </Button>
+      )}
     </div>
   );
 }
