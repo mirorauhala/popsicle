@@ -14,7 +14,7 @@ export default function ListHeading({
    * Handle list rename.
    */
   const handleListRename = () => {
-    const newName = prompt("Rename list", name);
+    const newName = prompt("Rename list", name) || "";
     setIsMenuOpen(false);
 
     if (newName !== "") {
