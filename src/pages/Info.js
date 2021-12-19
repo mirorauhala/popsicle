@@ -37,7 +37,7 @@ const Link = ({ children, ...rest }) => {
 
 export default function Info() {
   return (
-    <div className="md:w-9/12 mx-auto px-4 pt-10 md:pt-16">
+    <div className="md:w-9/12 max-w-4xl mx-auto px-4 pt-10 md:pt-16">
       <div className="pb-4 border-b-2 border-indigo-200">
         <h1 className="text-5xl font-bold text-indigo-900 mb-2">Info</h1>
       </div>
