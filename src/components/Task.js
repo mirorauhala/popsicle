@@ -223,7 +223,7 @@ export default function Task({
           </div>
 
           <button
-            className="opacity-0 focus:opacity-100 group-hover:opacity-100 transition ease-in-out delay-100 w-6 h-6 rounded bg-indigo-100"
+            className="md:opacity-0 focus:opacity-100 group-hover:opacity-100 transition ease-in-out delay-100 w-6 h-6 rounded bg-indigo-100"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <span className="sr-only">Open actions</span>
