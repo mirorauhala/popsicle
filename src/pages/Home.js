@@ -53,18 +53,20 @@ export default function Home() {
       const alerts = await TaskAll();
 
       alerts.forEach((task) => {
-        // don't show alarm for task that's already done
-        if (task.done) {
-          return false;
-        }
-
         // no alert
         if (task.alert === "") {
           return;
         }
 
-        // don't show alarm for task that isn't due yet
+        // don't show alert for task that isn't due yet
         if (new Date(task.alert) > new Date()) {
+          return false;
+        }
+
+        // don't show alert for task that's already done
+        if (task.done) {
+          // reset alert for the done task
+          TaskEdit({ alert: "", taskId: task.id });
           return false;
         }
 
