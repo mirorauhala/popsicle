@@ -295,6 +295,12 @@ export default function Info() {
           <p className="text-lg mb-3">
             The plus icon used in the new task field is made my Miro.
           </p>
+
+          <p className="text-lg mb-3">
+            The loading icon is from{" "}
+            <Link href="https://loading.io/css/">loading.io/css</Link> and it is
+            the public domain. (CC0)
+          </p>
         </Content>
       </Block>
     </div>
