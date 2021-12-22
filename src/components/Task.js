@@ -30,7 +30,11 @@ export default function Task({
 
   ReactModal.setAppElement("#modal-root");
 
-  useEffect(() => setAreNotificationsGranted(Notification.permission), []);
+  useEffect(() => {
+    if ("Notification" in window) {
+      setAreNotificationsGranted(Notification.permission);
+    }
+  }, []);
 
   /**
    * Handle selecting tags.

@@ -2,10 +2,12 @@ import Button from "../components/Button";
 import { useEffect, useState } from "react";
 
 export default function Settings() {
-  const [permissions, setPermissions] = useState();
+  const [permissions, setPermissions] = useState("");
 
   useEffect(() => {
-    setPermissions(Notification.permission);
+    if ("Notification" in window) {
+      setPermissions(Notification.permission);
+    }
   }, []);
 
   const handleNotificationPermission = (e) => {
@@ -24,7 +26,9 @@ export default function Settings() {
     <div className="bg-white p-10 rounded-2xl w-full h-full">
       <h1 className="font-bold text-5xl mb-10 text-indigo-900">Settings</h1>
 
-      {permissions === "granted" ? (
+      {"Notification" in window ? (
+        <p>Your browser does not support sending notifications.</p>
+      ) : permissions === "granted" ? (
         <Button onClick={handleNotificationTest}>
           Send a test notification
         </Button>

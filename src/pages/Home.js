@@ -73,10 +73,12 @@ export default function Home() {
         // clear alert for this task in the database
         TaskEdit({ alert: "", taskId: task.id });
 
-        // show alert
-        new Notification("Popsicle", {
-          body: task.body,
-        });
+        if ("Notification" in window) {
+          // show alert
+          new Notification("Popsicle", {
+            body: task.body,
+          });
+        }
       });
     }, 2500);
 
