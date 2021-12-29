@@ -29,5 +29,5 @@ npx json-server -h localhost -p 3010 db.json
 Run the following command in the project root. A web-server will be available at http://localhost:3000
 
 ```
-npm run start
+npm install && npm run start
 ```
