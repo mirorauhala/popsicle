@@ -27,15 +27,17 @@ export default function Settings() {
       <h1 className="font-bold text-5xl mb-10 text-indigo-900">Settings</h1>
 
       {"Notification" in window ? (
-        <p>Your browser does not support sending notifications.</p>
-      ) : permissions === "granted" ? (
-        <Button onClick={handleNotificationTest}>
-          Send a test notification
-        </Button>
+        permissions === "granted" ? (
+          <Button onClick={handleNotificationTest}>
+            Send a test notification
+          </Button>
+        ) : (
+          <Button onClick={handleNotificationPermission}>
+            Grant notification permissions
+          </Button>
+        )
       ) : (
-        <Button onClick={handleNotificationPermission}>
-          Grant notification permissions
-        </Button>
+        <p>Your browser does not support sending notifications.</p>
       )}
     </div>
   );
