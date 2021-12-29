@@ -1,9 +1,11 @@
 # Popsicle
 
-![](./.github/popsicle.png)
+[![](./.github/popsicle.png)](https://popsicle.rauhala.dev)
 
 A kanban task management app built with React and json-server for as part of the frontend course at Tampere University
 of Applied Sciences. As this is created as part of a frontend course, the backend is done with a simple json-server package.
+
+See [demo](https://popsicle.rauhala.dev).
 
 ## Usage
 
